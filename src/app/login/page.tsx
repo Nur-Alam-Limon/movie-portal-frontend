@@ -18,8 +18,12 @@ export default function LoginPage() {
   const handleLogin = async () => {
     try {
       const res = await login({ email, password }).unwrap();
-      dispatch(setCredentials({ user: res.user, token: res.token }));
-      router.push('/');
+      dispatch(setCredentials({ user: res.user, token: res.accessToken }));
+      if (res.user.role === 'admin') {
+        router.push('/admin/dashboard');
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
       alert(err?.data?.message || 'Login failed');
     }

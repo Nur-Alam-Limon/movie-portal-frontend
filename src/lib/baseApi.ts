@@ -1,12 +1,66 @@
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { setCredentials } from "@/features/auth/authSlice";
+import { RootState } from "@/store";
+import { BaseQueryFn } from "@reduxjs/toolkit/query";
+import { fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-export const baseQuery = fetchBaseQuery({
-  baseUrl: 'http://localhost:5000/api',
-  prepareHeaders: (headers, { getState }: any) => {
-    const token = getState().auth?.token;
-    if (token) {
-      headers.set('Authorization', `Bearer ${token}`);
+const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
+  const state = api.getState() as RootState;
+  const token = state.auth?.token;
+  const headers = new Headers();
+
+  if (token) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
+  const result = await fetchBaseQuery({
+    baseUrl: "http://localhost:3005/api",
+    prepareHeaders: (headers) => {
+      if (token) {
+        headers.set("Authorization", `Bearer ${token}`);
+      }
+      return headers;
+    },
+  })(args, api, extraOptions);
+
+  if (result.error?.status === 401) {
+    try {
+      // Try to refresh the access token
+      const refreshTokenResponse = await fetch(
+        "http://localhost:3005/api/auth/refresh",
+        {
+          method: "POST",
+          credentials: "include", 
+        }
+      );
+
+      if (refreshTokenResponse.ok) {
+        const { accessToken } = await refreshTokenResponse.json();
+
+        // Store the new access token in Redux state
+        api.dispatch(
+          setCredentials({ user: state.auth?.user, token: accessToken })
+        );
+
+        // Retry the failed request with the new access token
+        const retryResult = await fetchBaseQuery({
+          baseUrl: "http://localhost:3005/api",
+          prepareHeaders: (headers) => {
+            headers.set("Authorization", `Bearer ${accessToken}`);
+            return headers;
+          },
+        })(args, api, extraOptions);
+
+        return retryResult;
+      } else {
+        throw new Error("Unable to refresh token");
+      }
+    } catch (err) {
+      console.error("Token refresh failed", err);
+      throw new Error("Token refresh failed");
     }
-    return headers;
-  },
-});
+  }
+
+  return result;
+};
+
+export default baseQuery;
