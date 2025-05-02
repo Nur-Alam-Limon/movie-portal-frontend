@@ -13,10 +13,17 @@ import {
   FaBars,
   FaHeart,
   FaTimes,
+  FaSun,
+  FaMoon,
 } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 
-const Navbar: React.FC = () => {
+type NavbarProps = {
+  darkMode: boolean;
+  setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
   const { user, token } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -205,6 +212,19 @@ const Navbar: React.FC = () => {
           </Button>
         </div>
       </div>
+
+      {/* Dark Mode Toggle */}
+      <button
+        onClick={() => setDarkMode(!darkMode)}
+        className="p-2 rounded-full transition-colors duration-300 bg-gray-200 dark:bg-gray-700"
+      >
+        {darkMode ? (
+          <FaSun className="h-6 w-6 text-yellow-500" />
+        ) : (
+          <FaMoon className="h-6 w-6 text-gray-800" />
+        )}
+      </button>
+
     </nav>
   );
 };
