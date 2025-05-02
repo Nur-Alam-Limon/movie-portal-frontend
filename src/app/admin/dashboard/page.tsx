@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import withAdminProtection from "@/components/withAdminProtection";
+import withAdminProtection from "@/components/auth/withAdminProtection";
 import { useGetDashboardQuery } from "@/features/admin/adminApi";
 
 function AdminDashboardPage() {
