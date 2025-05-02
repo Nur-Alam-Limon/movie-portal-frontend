@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useLoginMutation } from "@/features/auth/authApi";
 import { setCredentials } from "@/features/auth/authSlice";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-hot-toast";
+import { useDispatch } from "react-redux";
 
 export default function LoginPage() {
   const dispatch = useDispatch();
@@ -26,7 +26,7 @@ export default function LoginPage() {
       toast.success("Login Successful", { duration: 3000 });
 
       if (res.user.role === "admin") {
-        router.push("/admin/dashboard");
+        router.push("/admin");
       } else {
         router.push("/");
       }
@@ -36,36 +36,42 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white py-20">
+    <div className="flex justify-center items-center min-h-screen bg-white px-4 md:px-8 lg:px-16 py-12">
       {/* Image Section */}
-      <div className="hidden md:block w-1/2 p-6">
+      <div className="hidden lg:flex w-1/2 justify-center items-center">
         <Image
-          src="https://img.freepik.com/free-vector/login-concept-illustration_114360-4525.jpg?t=st=1742249701~exp=1742253301~hmac=73086946b36398a716b6d88015fb49bf79624d57269d8ddc2a772ee3c1c5cdf6&w=1380"
+          src="/auth.jpg"
           alt="Login Illustration"
-          width={500}
-          height={500}
+          width={600}
+          height={600}
           priority
-          className="object-contain mx-auto"
+          className="object-contain"
         />
       </div>
 
       {/* Form Section */}
-      <div className="w-full max-w-md p-6 border border-gray-300 rounded-md shadow-lg bg-white mx-4 md:mx-0">
-        <h2 className="text-2xl text-center font-bold mb-6">Login</h2>
-        <form onSubmit={handleLogin}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Email</label>
+      <div className="w-full max-w-xl bg-white border border-gray-300 shadow-md rounded-xl p-8">
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          Login to Your Account
+        </h2>
+        <form onSubmit={handleLogin} className="space-y-5">
+          <div>
+            <label className="block text-base text-gray-700 mb-1">Email</label>
             <Input
               type="email"
+              className="h-12 text-base"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Password</label>
+          <div>
+            <label className="block text-base text-gray-700 mb-1">
+              Password
+            </label>
             <Input
               type="password"
+              className="h-12 text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -74,13 +80,16 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full py-2 bg-[#272727] text-white rounded-md hover:bg-[#1d1d1d] transition"
+            className="w-full h-12 bg-[#2C2A4A] text-base text-white rounded-md hover:bg-[#1d1d1d] transition"
           >
             {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
-        <p className="text-center mt-4 text-sm text-gray-500">
-          Don't have an account? <span className="text-black underline cursor-pointer">Register</span>
+        <p className="text-center mt-6 text-sm text-gray-600">
+          Don't have an account?{" "}
+          <span className="text-black font-medium underline cursor-pointer" onClick={()=>router.push("/register")}>
+            Register
+          </span>
         </p>
       </div>
     </div>

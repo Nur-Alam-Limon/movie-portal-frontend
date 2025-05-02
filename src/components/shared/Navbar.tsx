@@ -39,7 +39,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-[#272727] text-white py-6 px-8 lg:px-16 flex justify-between items-center shadow-md sticky top-0 z-50">
+    <nav className="bg-[#2C2A4A] text-white py-6 px-8 lg:px-16 flex justify-between items-center shadow-md sticky top-0 z-50">
       {/* Logo */}
       <Link href="/">
         <div className="flex items-center justify-center">
@@ -77,7 +77,7 @@ const Navbar: React.FC = () => {
             onChange={handleSearchChange}
             onKeyPress={handleSearchKeyPress}
             placeholder="Search..."
-            className="bg-[#272727] text-white py-2 px-8 rounded-full pl-12 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500 border"
+            className="bg-[#2C2A4A] text-white py-2 px-8 rounded-full pl-12 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500 border"
           />
           <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
@@ -85,7 +85,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu - Displayed when isMobileMenuOpen is true */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden absolute top-0 left-0 right-0 bg-[#272727] py-16 px-8 z-40">
+        <div className="lg:hidden absolute top-0 left-0 right-0 bg-[#2C2A4A] py-16 px-8 z-40">
           <div
             className="absolute right-10 top-10 text-2xl"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}

@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import Image from 'next/image';
-import { useRegisterMutation } from '@/features/auth/authApi';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { toast } from 'react-hot-toast';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useRegisterMutation } from "@/features/auth/authApi";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "react-hot-toast";
 
 export default function RegisterPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
   const [register, { isLoading }] = useRegisterMutation();
 
@@ -18,46 +18,52 @@ export default function RegisterPage() {
     e.preventDefault();
     try {
       await register({ email, password }).unwrap();
-      toast.success('Registration successful');
-      router.push('/login');
+      toast.success("Registration successful");
+      router.push("/login");
     } catch (err: any) {
-      toast.error(err?.data?.message || 'Registration failed');
+      toast.error(err?.data?.message || "Registration failed");
     }
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white py-20">
+    <div className="flex justify-center items-center min-h-screen bg-white px-4 md:px-8 lg:px-16 py-12">
       {/* Image Section */}
-      <div className="hidden md:block w-1/2 p-6">
+      <div className="hidden lg:flex w-1/2 justify-center items-center">
         <Image
-          src="https://img.freepik.com/free-vector/sign-up-concept-illustration_114360-7885.jpg?t=st=1742249701~exp=1742253301"
-          alt="Register"
-          width={500}
-          height={500}
-          priority={true}
-          className="object-contain mx-auto"
+          src="/auth.jpg"
+          alt="Register Illustration"
+          width={600}
+          height={600}
+          priority
+          className="object-contain"
         />
       </div>
 
       {/* Form Section */}
-      <div className="w-full max-w-md p-6 border border-gray-300 rounded-md shadow-lg bg-white mx-4 md:mx-0">
-        <h2 className="text-2xl text-center font-bold mb-6">Register</h2>
-        <form onSubmit={handleRegister}>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Email</label>
+      <div className="w-full max-w-xl bg-white border border-gray-300 shadow-md rounded-xl p-8">
+        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+          Create an Account
+        </h2>
+        <form onSubmit={handleRegister} className="space-y-5">
+          <div>
+            <label className="block text-base text-gray-700 mb-1">Email</label>
             <Input
               type="email"
               placeholder="Enter your email"
+              className="h-12 text-base"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-1">Password</label>
+          <div>
+            <label className="block text-base text-gray-700 mb-1">
+              Password
+            </label>
             <Input
               type="password"
               placeholder="Enter your password"
+              className="h-12 text-base"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
@@ -66,20 +72,20 @@ export default function RegisterPage() {
 
           <Button
             type="submit"
-            className="w-full py-2 bg-[#272727] text-white hover:bg-[#1d1d1d] transition"
             disabled={isLoading}
+            className="w-full h-12 bg-[#2C2A4A] text-base text-white rounded-md hover:bg-[#1d1d1d] transition"
           >
-            {isLoading ? 'Registering...' : 'Register'}
+            {isLoading ? "Registering..." : "Register"}
           </Button>
         </form>
 
-        {/* Optional social auth buttons (future enhancement)
-        <div className="mt-4 text-center space-y-2">
-          <button className="flex items-center justify-center w-full py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition">
-            <FaGoogle className="mr-2" /> Sign up with Google
-          </button>
-        </div>
-        */}
+        {/* Optional footer or switch link */}
+        <p className="text-center mt-6 text-sm text-gray-600">
+          Already have an account?{" "}
+          <span className="text-black font-medium underline cursor-pointer" onClick={()=>router.push("/login")}>
+            Login
+          </span>
+        </p>
       </div>
     </div>
   );

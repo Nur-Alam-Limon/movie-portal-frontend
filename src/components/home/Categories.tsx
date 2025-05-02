@@ -13,7 +13,7 @@ const Categories: React.FC = () => {
           <div
             onClick={()=>router.push('/products')}
             key={category}
-            className="bg-white p-3 rounded-lg shadow hover:bg-blue-400 cursor-pointer transition"
+            className="bg-white p-3 rounded-lg shadow hover:bg-yellow-400 cursor-pointer transition"
           >
             {category}
           </div>

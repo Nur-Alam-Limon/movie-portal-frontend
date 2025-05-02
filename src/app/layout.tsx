@@ -42,12 +42,12 @@ export default function RootLayout({
               },
               success: {
                 style: {
-                  background: "#272727", // Purple background
+                  background: "#2C2A4A", // Purple background
                   color: "#fff",
-                  border: "1px solid #272727", // Darker purple border
+                  border: "1px solid #2C2A4A", // Darker purple border
                 },
                 iconTheme: {
-                  primary: "#272727",
+                  primary: "#2C2A4A",
                   secondary: "#fff",
                 },
               },
@@ -58,7 +58,7 @@ export default function RootLayout({
                   border: "1px solid rgb(255, 0, 0)", // Darker red border
                 },
                 iconTheme: {
-                  primary: "#272727",
+                  primary: "#2C2A4A",
                   secondary: "#fff",
                 },
               },

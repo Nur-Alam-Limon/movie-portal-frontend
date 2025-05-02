@@ -17,6 +17,7 @@ export const authApi = createApi({
         url: '/auth/login',
         method: 'POST',
         body: data,
+        credentials: 'include',
       }),
     }),
     refresh: builder.mutation({

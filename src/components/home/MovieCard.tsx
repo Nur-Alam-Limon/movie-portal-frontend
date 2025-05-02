@@ -1,81 +1,48 @@
-"use client"
-import React from "react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { ShoppingCart, Heart } from "lucide-react";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/navigation";
+"use client";
 
-interface ProductCardProps {
-  title: string;
-  price: string;
-  image: string;
-  description: string;
-  condition: string;
-  listing: any;
-}
+import { Heart, MessageCircle, Star } from "lucide-react";
 
-const MovieCard: React.FC<ProductCardProps> = ({
-  title,
-  price,
-  image,
-  description,
-  condition,
-  listing,
-}) => {
-  const dispatch = useDispatch();
-  const router = useRouter()
-  const handleAddToCart = () => {
-    
+type MovieCardProps = {
+  movie: {
+    id: string;
+    title: string;
+    synopsis: string;
+    genres: string[];
+    releaseYear: number;
+    director: string;
   };
-
-  const handleAddToWishlist = () => {
-    
-  };
-  return (
-    <Card onClick={()=>router.push(`/product-details/${listing._id}`)} className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition p-4 cursor-pointer">
-      <img
-        src={image}
-        alt={title}
-        className="w-full h-60 object-cover rounded-xl"
-      />
-      <CardHeader>
-        <CardTitle
-          className="text-xl font-bold text-gray-800 line-clamp-2"
-          style={{ minHeight: "48px" }} 
-        >
-          {title}
-        </CardTitle>
-
-        <CardDescription
-          className="text-sm text-gray-500 line-clamp-3"
-          style={{ minHeight: "60px" }} 
-        >
-          {description}
-        </CardDescription>
-      </CardHeader>
-      <CardContent className="space-y-2">
-        <p className="text-blue-500 font-semibold">Price: {price}</p>
-        <p className="text-gray-600">Condition: {condition}</p>
-        <div className="flex flex-col gap-2 mt-4">
-          {listing.status=='available' ? <Button onClick={handleAddToCart} className="w-full flex items-center justify-center gap-2 cursor-pointer">
-            <ShoppingCart size={18} /> Add to Cart
-          </Button>: <Button disabled className="w-full flex items-center justify-center gap-2 cursor-pointer">
-            <ShoppingCart size={18} /> Already Sold
-          </Button>}
-          <Button onClick={handleAddToWishlist} variant="outline" className="w-full flex items-center justify-center gap-2 cursor-pointer">
-            <Heart size={18} /> Add to Wishlist
-          </Button>
-        </div>
-      </CardContent>
-    </Card>
-  );
 };
 
-export default MovieCard;
+export default function MovieCard({ movie }: MovieCardProps) {
+  return (
+    <div className="bg-[#2C2A4A] text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300">
+      {/* Dummy Image */}
+      <div className="h-64 w-full bg-cover bg-center" style={{ backgroundImage: `url('https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=800&q=80')` }} />
+
+      {/* Content */}
+      <div className="p-6 space-y-3">
+        <h2 className="text-2xl font-bold">{movie.title} <span className="text-sm text-gray-400">({movie.releaseYear})</span></h2>
+        <p className="text-md text-gray-300 line-clamp-3">{movie.synopsis}</p>
+        <div className="text-sm text-gray-400">
+          <strong className="text-gray-200">Genres:</strong> {movie.genres.join(", ")}
+        </div>
+        <div className="text-sm text-gray-400">
+          <strong className="text-gray-200">Director:</strong> {movie.director}
+        </div>
+
+        {/* Actions */}
+        <div className="flex justify-between items-center pt-4 border-t border-gray-700 mt-4">
+          <button className="flex items-center gap-1 text-gray-200 hover:text-red-500 transition">
+            <Heart className="w-4 h-4" /> Like
+          </button>
+          <button className="flex items-center gap-1 text-gray-200 hover:text-blue-400 transition">
+            <MessageCircle className="w-4 h-4" /> Comment
+          </button>
+          <button className="flex items-center gap-1 text-gray-200 hover:text-yellow-400 transition">
+            <Star className="w-4 h-4" /> Review
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
