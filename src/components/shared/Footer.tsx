@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
               href="https://facebook.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-yellow-400"
+              className="text-gray-400 hover:text-blue-400"
             >
               <FaFacebookF size={20} />
             </a>
@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
               href="https://twitter.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-yellow-400"
+              className="text-gray-400 hover:text-blue-400"
             >
               <FaTwitter size={20} />
             </a>
@@ -45,7 +45,7 @@ const Footer: React.FC = () => {
               href="https://instagram.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-yellow-400"
+              className="text-gray-400 hover:text-blue-400"
             >
               <FaInstagram size={20} />
             </a>
@@ -53,7 +53,7 @@ const Footer: React.FC = () => {
               href="https://linkedin.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-400 hover:text-yellow-400"
+              className="text-gray-400 hover:text-blue-400"
             >
               <FaLinkedinIn size={20} />
             </a>
@@ -68,22 +68,22 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="/products" className="hover:text-yellow-400">
+                <a href="/products" className="hover:text-blue-400">
                   Products
                 </a>
               </li>
               <li>
-                <a href="" className="hover:text-yellow-400">
+                <a href="" className="hover:text-blue-400">
                   About Us
                 </a>
               </li>
               <li>
-                <a href="" className="hover:text-yellow-400">
+                <a href="" className="hover:text-blue-400">
                   Contact
                 </a>
               </li>
               <li>
-                <a href="/dashboard" className="hover:text-yellow-400">
+                <a href="/dashboard" className="hover:text-blue-400">
                   Dashboard
                 </a>
               </li>

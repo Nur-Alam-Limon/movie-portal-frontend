@@ -4,6 +4,7 @@ import { persistReducer, persistStore } from 'redux-persist';
 
 import { authApi } from '../features/auth/authApi';
 import authReducer from '../features/auth/authSlice';
+import omdbReducer from '../features/omdb/omdbSlice'
 import { adminApi } from '../features/admin/adminApi';
 import { moviesApi } from '../features/movies/moviesApi';
 import { reviewsApi } from '../features/reviews/reviewsApi';
@@ -22,6 +23,7 @@ const persistConfig = {
 // Combine reducers
 const rootReducer = combineReducers({
   auth: authReducer,
+  omdb: omdbReducer,
   [authApi.reducerPath]: authApi.reducer,
   [adminApi.reducerPath]: adminApi.reducer,
   [moviesApi.reducerPath]: moviesApi.reducer,

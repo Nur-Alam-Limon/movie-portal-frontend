@@ -24,10 +24,12 @@ type NavbarProps = {
 };
 
 const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
-  const { user, token } = useSelector((state: RootState) => state.auth);
+  const { user } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  console.log("Navabr", user)
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
 
@@ -107,7 +109,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               Products
             </Link>
 
-            {token ? (
+            {user ? (
               <>
                 <Link
                   href="/dashboard"
@@ -164,7 +166,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
           Products
         </Link>
 
-        {token ? (
+        {user ? (
           <>
             <Link
               href="/dashboard"
@@ -219,7 +221,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
         className="p-2 rounded-full transition-colors duration-300 bg-gray-200 dark:bg-gray-700"
       >
         {darkMode ? (
-          <FaSun className="h-6 w-6 text-yellow-500" />
+          <FaSun className="h-6 w-6 text-blue-500" />
         ) : (
           <FaMoon className="h-6 w-6 text-gray-800" />
         )}

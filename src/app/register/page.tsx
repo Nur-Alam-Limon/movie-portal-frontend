@@ -26,7 +26,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-white px-4 md:px-8 lg:px-16 py-12">
+    <div className="flex justify-center items-center min-h-screen px-4 md:px-8 lg:px-16 py-12 bg-background text-foreground">
       {/* Image Section */}
       <div className="hidden lg:flex w-1/2 justify-center items-center">
         <Image
@@ -35,18 +35,18 @@ export default function RegisterPage() {
           width={600}
           height={600}
           priority
-          className="object-contain"
+          className="object-contain rounded-xl"
         />
       </div>
 
       {/* Form Section */}
-      <div className="w-full max-w-xl bg-white border border-gray-300 shadow-md rounded-xl p-8">
-        <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">
+      <div className="w-full max-w-xl border border-gray-300 shadow-md rounded-xl p-8 bg-background text-foreground">
+        <h2 className="text-3xl font-bold text-center mb-6">
           Create an Account
         </h2>
         <form onSubmit={handleRegister} className="space-y-5">
           <div>
-            <label className="block text-base text-gray-700 mb-1">Email</label>
+            <label className="block text-base mb-1">Email</label>
             <Input
               type="email"
               placeholder="Enter your email"
@@ -57,7 +57,7 @@ export default function RegisterPage() {
             />
           </div>
           <div>
-            <label className="block text-base text-gray-700 mb-1">
+            <label className="block text-base mb-1">
               Password
             </label>
             <Input
@@ -80,7 +80,7 @@ export default function RegisterPage() {
         </form>
 
         {/* Optional footer or switch link */}
-        <p className="text-center mt-6 text-sm text-gray-600">
+        <p className="text-center mt-6 text-sm ">
           Already have an account?{" "}
           <span className="text-black font-medium underline cursor-pointer" onClick={()=>router.push("/login")}>
             Login
