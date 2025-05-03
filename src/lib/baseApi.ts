@@ -13,7 +13,7 @@ const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
   }
 
   const result = await fetchBaseQuery({
-    baseUrl: "http://localhost:3005/api",
+    baseUrl: process.env.NEXT_PUBLIC_API_BACKEND_URL,
     credentials: "include",
     prepareHeaders: (headers) => {
       if (token) {
@@ -27,7 +27,7 @@ const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
     try {
       // Try to refresh the access token
       const refreshTokenResponse = await fetch(
-        "http://localhost:3005/api/auth/refresh",
+        `${process.env.NEXT_PUBLIC_API_BACKEND_URL}/auth/refresh`,
         {
           method: "POST",
           credentials: "include", 
@@ -44,7 +44,7 @@ const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 
         // Retry the failed request with the new access token
         const retryResult = await fetchBaseQuery({
-          baseUrl: "http://localhost:3005/api",
+          baseUrl: process.env.NEXT_PUBLIC_API_BACKEND_URL,
           prepareHeaders: (headers) => {
             headers.set("Authorization", `Bearer ${accessToken}`);
             return headers;

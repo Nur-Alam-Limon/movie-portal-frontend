@@ -15,8 +15,6 @@ import {
 function AdminDashboardPage() {
   const { data, isLoading, isError } = useGetDashboardQuery();
 
-  console.log("data", data);
-
   const ratingStats = data?.ratingStats ?? [];
   const activeUsers = data?.activeUsers ?? [];
 

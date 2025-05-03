@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 const Banner: React.FC = () => {
   return (
@@ -19,16 +18,7 @@ const Banner: React.FC = () => {
         className="absolute inset-0 flex items-center justify-center text-white"
         style={{ backgroundColor: "rgba(39, 39, 39, 0.3)" }}
       >
-        {/* <div className="text-center space-y-4 px-4 sm:px-6 lg:px-16">
-          <h1 className="text-4xl sm:text-5xl font-bold">Movie Portal</h1>
-          <p className="text-lg sm:text-xl pb-2">Rate & Review Your Favourite Movies</p>
-          <Link
-            href="/products"
-            className="bg-[#F0F7F4] py-3 px-6 text-black rounded font-semibold transition hover:bg-[#e0e8e4]"
-          >
-            See Movies
-          </Link>
-        </div> */}
+        
       </div>
     </div>
   );

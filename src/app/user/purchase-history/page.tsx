@@ -4,18 +4,13 @@ import { UserProtection } from "@/components/auth/Protection";
 import { useGetUserTransactionsQuery } from "@/features/payment/paymentApi";
 import {
   BsCalendarDate,
-  BsCameraReels,
-  BsCurrencyDollar,
   BsFilm,
   BsPeople,
-  BsPerson,
   BsTags,
 } from "react-icons/bs";
 
 function PurchaseHistoryPage() {
   const { data, isLoading, isError } = useGetUserTransactionsQuery(null);
-
-  console.log("Payment Data", data);
 
   return (
     <div className="max-w-6xl mx-auto p-4 pt-20 mb-40">

@@ -4,12 +4,11 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Categories: React.FC = () => {
-  const { data: movies, isLoading, isError } = useGetAllMoviesQuery(null);
+  const { data: movies } = useGetAllMoviesQuery(null);
   
   const allGenres = Array.from(
     new Set(movies?.flatMap((movie: any) => movie.genres || []))
   ) as string[];
-  const categories = ['Electronics', 'Furniture', 'Fashion', 'Books', 'Home Appliances','Baby Item', 'Gadgets', 'Kitchen Items'];
   const router = useRouter()
   return (
     <div className="my-12 px-8 lg:px-16 text-center">

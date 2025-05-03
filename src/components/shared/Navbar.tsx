@@ -5,13 +5,10 @@ import { logout } from "@/features/auth/authSlice";
 import { AppDispatch, RootState } from "@/store";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import {
-  FaUserCircle,
-  FaShoppingCart,
   FaSearch,
   FaBars,
-  FaHeart,
   FaTimes,
   FaSun,
   FaMoon,
@@ -33,8 +30,6 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
-
-  console.log("user", user)
   
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

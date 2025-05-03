@@ -1,3 +1,4 @@
+// @ts-ignore
 "use client";
 
 import MovieReviews from "@/components/movie/movieReviews";
@@ -6,7 +7,7 @@ import { useGetMovieByIdQuery } from "@/features/movies/moviesApi";
 import { useInitiatePaymentMutation } from "@/features/payment/paymentApi";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { use } from "react";
 // Import payment API mutation
 import { toast } from "react-hot-toast";
 import {
@@ -21,28 +22,13 @@ import {
 import { useSelector } from "react-redux";
 
 interface MovieDetailsProps {
-  params: { movieId: string };
+  params: Promise<{ movieId: string }>;
 }
 
-interface Comment {
-  id: number;
-  text: string;
-}
-
-export default function MovieDetailsPage({ params }: MovieDetailsProps) {
-  const { movieId } = params;
+const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
+  const { movieId } = use(params);;
   const { data: movie, isLoading } = useGetMovieByIdQuery(movieId);
   const user = useSelector((state: RootState) => state.auth.user);
-
-  console.log("movie", movie);
-
-  const [likes, setLikes] = useState<{ [reviewId: number]: boolean }>({});
-  const [comments, setComments] = useState<{ [reviewId: number]: Comment[] }>(
-    {}
-  );
-  const [newComment, setNewComment] = useState<{ [reviewId: number]: string }>(
-    {}
-  );
 
   const router = useRouter();
 
@@ -63,12 +49,12 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
         total_amount: movie.priceBuy,
         tran_id: tranId,
         movieID: parseInt(movieId),
-        userID: user?.id, // Make sure user is available in your context
+        userID: user?.id, 
         accessType: "RENT",
         customer: {
           name: "User",
           email: user?.email,
-          phone: "01700000000", // fallback if phone is optional
+          phone: "01700000000", 
           address: "Dhaka",
         },
       }).unwrap();
@@ -96,12 +82,12 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
         total_amount: movie.priceBuy,
         tran_id: tranId,
         movieID: parseInt(movieId),
-        userID: user?.id, // Make sure user is available in your context
+        userID: user?.id, 
         accessType: "BUY",
         customer: {
           name: "User",
           email: user?.email,
-          phone: "01700000000", // fallback if phone is optional
+          phone: "01700000000", 
           address: "Dhaka",
         },
       }).unwrap();
@@ -241,3 +227,5 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
     </div>
   );
 }
+
+export default MovieDetailsPage;

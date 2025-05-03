@@ -1,4 +1,3 @@
-// app/about/page.tsx or pages/about.tsx (depending on routing setup)
 import Image from "next/image";
 
 export default function AboutPage() {

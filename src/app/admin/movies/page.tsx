@@ -21,7 +21,6 @@ import {
 } from "@/features/movies/moviesApi";
 import { getOmdbSearchResults, getOmdbMovieDetails } from "@/features/omdb/omdbSlice";
 import { AppDispatch, RootState } from "@/store";
-import axios from "axios";
 import { Loader2, Plus, Pencil, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -32,9 +31,6 @@ function MoviesPage() {
   const { searchResults , loading, error } = useSelector(
     (state: RootState) => state.omdb
   );
-
-  console.log("Omdb Movies", searchResults);
-  console.log("Movie", movies)
 
   const [addMovie] = useAddMovieMutation();
   const [updateMovie] = useUpdateMovieMutation();
@@ -63,7 +59,6 @@ function MoviesPage() {
     const action = await dispatch(getOmdbMovieDetails(title));
     if (getOmdbMovieDetails.fulfilled.match(action)) {
       const movie = action.payload;
-      console.log("Movie123", movie);
   
       const payload = {
         title: movie.Title,
@@ -72,16 +67,15 @@ function MoviesPage() {
         releaseYear: Number(movie.Year),
         director: movie.Director,
         cast: movie.Actors?.split(",").map((a: string) => a.trim()) || [],
-        streamingLinks: [], // You might want to let the user input this
+        streamingLinks: [], 
         accessUrl: movie.Poster,
-        priceBuy: 50, // Default or user input
-        priceRent: 30, // Default or user input
-        discount: 0, // Default or user input
+        priceBuy: 50, 
+        priceRent: 30, 
+        discount: 0,
       };
   
       console.log("Creating with payload:", payload);
   
-      // Now send `payload` to your API to create the record
       await addMovie(payload);
       refetch();
     } else {

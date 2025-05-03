@@ -22,8 +22,6 @@ function AdminReviewsPage() {
   const [approveReview] = useApproveReviewMutation();
   const [deleteReview] = useDeleteReviewMutation();
 
-  console.log('reviews', reviews);
-
   const handleApprove = async (id: number) => {
     try {
       await approveReview(id).unwrap();

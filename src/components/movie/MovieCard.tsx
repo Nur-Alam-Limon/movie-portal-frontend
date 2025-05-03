@@ -45,7 +45,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   const router = useRouter();
   const [addReview] = useAddReviewMutation();
-  const [toggleWatchlist] = useToggleWatchlistMutation(); // Use the toggle watchlist mutation
+  const [toggleWatchlist] = useToggleWatchlistMutation(); 
   const { data: watchlist } = useGetMyWatchlistQuery(null); // Fetch the user's watchlist
 
   // Check if the movie is in the watchlist
@@ -58,37 +58,6 @@ export default function MovieCard({ movie }: MovieCardProps) {
     }
   }, [watchlist, movie.id]);
 
-  const handleAction = async () => {
-    if (!isLoggedIn) {
-      toast.error("Please log in to perform this action!");
-      router.push("/login");
-      return;
-    }
-
-    try {
-      if (editMovieType === "review") {
-        await addReview({
-          movieId: Number(movie.id),
-          rating,
-          text: inputText,
-          tags,
-          spoiler,
-        });
-        toast.success("Review added!");
-      }
-    } catch (error) {
-      console.error(error);
-      toast.error("Something went wrong!");
-    }
-
-    // Reset state
-    setEditMovieType(null);
-    setInputText("");
-    setRating(0);
-    setTags([]);
-    setTagInput("");
-    setSpoiler(false);
-  };
 
   const handleAddToWatchlist = async () => {
     if (!isLoggedIn) {

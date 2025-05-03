@@ -13,11 +13,11 @@ import { likesApi } from '../features/likes/likesApi';
 import { watchlistApi } from '../features/watchlist/watchlistApi';
 import { paymentApi } from '../features/payment/paymentApi';
 
-// Persist config (only persist auth slice)
+// Persist config 
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['auth'], // only persist auth slice
+  whitelist: ['auth'], 
 };
 
 // Combine reducers

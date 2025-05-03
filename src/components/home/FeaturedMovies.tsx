@@ -7,19 +7,17 @@ import MovieCard from "../movie/MovieCard";
 
 type FeaturedMoviesProps = {
   headingText: string;
-  variant?: string; // Add as needed
+  variant?: string; 
 };
 
 const FeaturedMovies: React.FC<FeaturedMoviesProps> = ({ headingText, variant }) => {
   const { data: movieData, isLoading, isError } = useGetAllMoviesQuery(null);
 
-  // Loading and Error handling
+  
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
 
-  console.log("Movies Data", movieData);
-
-  // Check if we have the expected movie data (assuming it's inside MovieAccess)
+  
   let filteredMovies = movieData;
 
   if (!Array.isArray(filteredMovies) || filteredMovies.length === 0) {
@@ -34,32 +32,32 @@ const FeaturedMovies: React.FC<FeaturedMoviesProps> = ({ headingText, variant })
   // Customize the movie list based on variant
   switch (variant) {
     case "popular":
-      filteredMovies = [...filteredMovies] // Create a shallow copy
-        .sort((a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0)) // Sort by review count or another metric
-        .slice(0, 4); // Limit to top 8
+      filteredMovies = [...filteredMovies] 
+        .sort((a, b) => (b.reviewCount ?? 0) - (a.reviewCount ?? 0)) 
+        .slice(0, 4); 
       break;
     case "topRated":
-      filteredMovies = [...filteredMovies] // Create a shallow copy
-        .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)) // Sort by rating
-        .slice(0, 4); // Limit to top 8
+      filteredMovies = [...filteredMovies] 
+        .sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)) 
+        .slice(0, 4); 
       break;
     case "thriller":
-      filteredMovies = [...filteredMovies] // Create a shallow copy
-        .filter((movie) => movie.genres.includes("Thriller")) // Only show Thriller movies
-        .slice(0, 4); // Limit to top 8 thriller movies
+      filteredMovies = [...filteredMovies] 
+        .filter((movie) => movie.genres.includes("Thriller"))
+        .slice(0, 4); 
       break;
     case "Darama":
-    filteredMovies = [...filteredMovies] // Create a shallow copy
-      .filter((movie) => movie.genres.includes("Drama")) // Only show Thriller movies
-      .slice(0, 4); // Limit to top 8 thriller movies
+    filteredMovies = [...filteredMovies] 
+      .filter((movie) => movie.genres.includes("Drama")) 
+      .slice(0, 4); 
     break;
     case "Action":
-    filteredMovies = [...filteredMovies] // Create a shallow copy
-      .filter((movie) => movie.genres.includes("Action")) // Only show Thriller movies
-      .slice(0, 4); // Limit to top 8 thriller movies
+    filteredMovies = [...filteredMovies] 
+      .filter((movie) => movie.genres.includes("Action")) 
+      .slice(0, 4); 
     break;
     default:
-      filteredMovies = [...filteredMovies].slice(0, 4); // Default: Show top 8 movies
+      filteredMovies = [...filteredMovies].slice(0, 4); 
   }
 
   return (

@@ -8,8 +8,6 @@ import { useGetUserReviewsQuery } from "@/features/reviews/reviewsApi";
 function MyReviewsPage() {
   const { data: reviews, isLoading, isError } = useGetUserReviewsQuery(null);
 
-  console.log("reviews", reviews);
-
   return (
     <div className="max-w-6xl mx-auto p-4 pt-20 mb-40">
       <h1 className="text-3xl font-bold text-center md:text-left mb-6">
