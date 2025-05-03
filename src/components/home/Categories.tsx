@@ -1,21 +1,27 @@
 "use client"
+import { useGetAllMoviesQuery } from '@/features/movies/moviesApi';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const Categories: React.FC = () => {
+  const { data: movies, isLoading, isError } = useGetAllMoviesQuery(null);
+  
+  const allGenres = Array.from(
+    new Set(movies?.flatMap((movie: any) => movie.genres || []))
+  ) as string[];
   const categories = ['Electronics', 'Furniture', 'Fashion', 'Books', 'Home Appliances','Baby Item', 'Gadgets', 'Kitchen Items'];
   const router = useRouter()
   return (
     <div className="my-12 px-8 lg:px-16 text-center">
-      <h2 className="text-3xl font-bold mb-6 text-center">Browse by Category</h2>
+      <h2 className="text-3xl font-bold mb-6 text-center">Browse by Genre</h2>
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        {categories.map((category) => (
+        {allGenres.slice(0,12)?.map((genre: any) => (
           <div
-            onClick={()=>router.push('/products')}
-            key={category}
+            onClick={()=>router.push(`/browse-movies?genre=${genre}`)}
+            key={genre}
             className="bg-white p-3 rounded-lg shadow hover:bg-blue-400 cursor-pointer transition dark:text-black text-lg"
           >
-            {category}
+            {genre}
           </div>
         ))}
       </div>

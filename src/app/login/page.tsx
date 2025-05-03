@@ -40,7 +40,7 @@ export default function LoginPage() {
       {/* Image Section */}
       <div className="hidden lg:flex w-1/2 justify-center items-center">
         <Image
-          src="/auth.jpg"
+          src="/auth.png"
           alt="Login Illustration"
           width={600}
           height={600}
@@ -87,7 +87,7 @@ export default function LoginPage() {
         </form>
         <p className="text-center mt-6 text-sm">
           Don't have an account?{" "}
-          <span className="text-black font-medium underline cursor-pointer" onClick={()=>router.push("/register")}>
+          <span className="font-medium underline cursor-pointer" onClick={()=>router.push("/register")}>
             Register
           </span>
         </p>

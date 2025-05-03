@@ -28,10 +28,20 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
-  console.log("Navabr", user)
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(e.target.value);
+  };
 
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+  console.log("user", user)
+  
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/browse-movies?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -39,7 +49,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
   const handleSearchKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
-      router.push("/products");
+      router.push("/browse-movies");
     }
   };
 
@@ -79,17 +89,18 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
       {/* Search Bar - Hidden on Mobile */}
       <div className="pl-28 hidden lg:block flex-grow items-center justify-center mx-20">
+      <form onSubmit={handleSearchSubmit} className="flex items-center gap-2">
         <div className="relative">
           <input
             type="text"
-            value=""
+            value={searchQuery}
             onChange={handleSearchChange}
-            onKeyPress={handleSearchKeyPress}
-            placeholder="Search..."
+            placeholder="Search movies..."
             className="bg-[#2C2A4A] text-white py-2 px-8 rounded-full pl-12 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500 border"
           />
           <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
         </div>
+        </form>
       </div>
 
       {/* Mobile Menu - Displayed when isMobileMenuOpen is true */}
@@ -103,10 +114,10 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
           </div>
           <div className="space-y-8">
             <Link
-              href="/products"
+              href="/browse-movies"
               className="block hover:text-[#71A9F7] transition"
             >
-              Products
+              All Movies
             </Link>
 
             {user ? (
@@ -162,8 +173,8 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
       {/* Navigation Links - Visible on larger screens */}
       <div className="space-x-6 flex items-center hidden lg:flex">
-        <Link href="/products" className="hover:text-[#71A9F7] transition">
-          Products
+        <Link href="/browse-movies" className="hover:text-[#71A9F7] transition">
+        All Movies
         </Link>
 
         {user ? (

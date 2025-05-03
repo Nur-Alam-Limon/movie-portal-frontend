@@ -8,6 +8,8 @@ import MovieCard from "./MovieCard";
 const FeaturedMovies: React.FC = () => {
   const { data: movies, isLoading, isError } = useGetAllMoviesQuery(null);
 
+  console.log("Movies", movies)
+
   if (isLoading) return <Loading />;
   if (isError) return <Error />;
   if (!Array.isArray(movies) || movies.length === 0) {
@@ -24,7 +26,7 @@ const FeaturedMovies: React.FC = () => {
       <h2 className="text-3xl font-bold mb-6 text-center">Featured Listings</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {movies.slice(0, 8).map((movie) => (
-         <MovieCard movie={movie} />
+         <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
     </div>

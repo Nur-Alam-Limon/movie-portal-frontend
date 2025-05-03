@@ -30,7 +30,7 @@ export default function RegisterPage() {
       {/* Image Section */}
       <div className="hidden lg:flex w-1/2 justify-center items-center">
         <Image
-          src="/auth.jpg"
+          src="/auth.png"
           alt="Register Illustration"
           width={600}
           height={600}
@@ -82,7 +82,7 @@ export default function RegisterPage() {
         {/* Optional footer or switch link */}
         <p className="text-center mt-6 text-sm ">
           Already have an account?{" "}
-          <span className="text-black font-medium underline cursor-pointer" onClick={()=>router.push("/login")}>
+          <span className="font-medium underline cursor-pointer" onClick={()=>router.push("/login")}>
             Login
           </span>
         </p>
