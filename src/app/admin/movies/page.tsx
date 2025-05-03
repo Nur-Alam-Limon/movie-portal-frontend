@@ -113,7 +113,7 @@ function MoviesPage() {
               Add New Movie
             </Button>
           </DialogTrigger>
-          <DialogContent>
+          <DialogContent className="bg-white text-black dark:bg-[#2C2A4A] dark:text-white">
             <DialogHeader>
               <DialogTitle>Add Movie</DialogTitle>
               <DialogDescription>Enter movie details below.</DialogDescription>
@@ -184,7 +184,7 @@ function MoviesPage() {
                     open={editMovie?.id === movie.id}
                     onOpenChange={() => setEditMovie(null)}
                   >
-                    <DialogContent>
+                    <DialogContent className="bg-white text-black dark:bg-[#2C2A4A] dark:text-white">
                       <DialogHeader>
                         <DialogTitle>Edit Movie</DialogTitle>
                         <DialogDescription>

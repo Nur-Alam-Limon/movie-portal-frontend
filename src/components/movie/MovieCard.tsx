@@ -158,7 +158,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             <Dialog>
               <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
                 <button className="flex items-center gap-2 px-2 py-2 text-sm text-white rounded hover:text-yellow-400 transition cursor-pointer">
-                  <Star className="w-5 h-5" /> Add a Review
+                  <Star className="w-5 h-5" /> Review
                 </button>
               </DialogTrigger>
               {editMovieType === "review" && (

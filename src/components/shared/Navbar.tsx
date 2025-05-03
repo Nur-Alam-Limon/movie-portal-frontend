@@ -124,13 +124,20 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               All Movies
             </Link>
 
+            <Link
+              href="/about"
+              className="block hover:text-[#71A9F7] transition"
+            >
+              About Us
+            </Link>
+
             {user ? (
               <>
                 <Link
                   href={dashboardHref}
                   className="block hover:text-[#71A9F7] transition flex items-center"
                 >
-                  <FaUserCircle className="mr-1" /> Dashboard
+                   Dashboard
                 </Link>
                 <Button
                   className="py-2 px-4 bg-red-500 text-white rounded-md"
@@ -157,20 +164,14 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             )}
 
             {/* Wishlist Text */}
-            <Link
+            {/* <Link
               href="/wishlist"
               className="block hover:text-[#71A9F7] transition"
             >
               Wishlist
-            </Link>
+            </Link> */}
 
-            {/* Cart Text */}
-            <Link
-              href="/cart"
-              className="block hover:text-[#71A9F7] transition"
-            >
-              Cart
-            </Link>
+           
           </div>
         </div>
       )}
@@ -181,13 +182,20 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
         All Movies
         </Link>
 
+        <Link
+              href="/about"
+              className="block hover:text-[#71A9F7] transition"
+            >
+              About Us
+            </Link>
+
         {user ? (
           <>
             <Link
               href={dashboardHref}
               className="hover:text-[#71A9F7] transition flex items-center"
             >
-              <FaUserCircle className="mr-1" /> Dashboard
+              Dashboard
             </Link>
             <Button
               className="py-2 px-4 bg-red-500 text-white rounded-md"
@@ -209,24 +217,16 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
         <div className="flex items-center mr-2">
           {/* Wishlist Icon - Hidden on Mobile */}
-          <Button
+          {/* <Button
             variant="ghost"
             size="default"
             className="relative text-gray-200 flex items-center hidden lg:block"
             onClick={() => router.push("/wishlist")}
           >
             <FaHeart className="cursor-pointer text-xl" />
-          </Button>
+          </Button> */}
 
-          {/* Shopping Cart Icon - Hidden on Mobile */}
-          <Button
-            variant="ghost"
-            size="default"
-            className="relative text-gray-200 flex items-center hidden lg:block"
-            onClick={() => router.push("/cart")}
-          >
-            <FaShoppingCart className="cursor-pointer text-xl" />
-          </Button>
+          
         </div>
       </div>
 

@@ -46,7 +46,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
   return (
     <div className="space-y-4 max-h-[600px] overflow-y-auto">
       <div className="flex flex-col">
-        <label className="text-sm">Title</label>
+        <label className="text-sm mb-4">Title</label>
         <Input
           placeholder="Title"
           value={title}
@@ -55,7 +55,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Synopsis</label>
+        <label className="text-sm mb-4">Synopsis</label>
         <Textarea
           placeholder="Synopsis"
           value={synopsis}
@@ -64,7 +64,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Genres (comma separated)</label>
+        <label className="text-sm mb-4">Genres (comma separated)</label>
         <Input
           placeholder="Genres (comma separated)"
           value={genres}
@@ -73,7 +73,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Release Year</label>
+        <label className="text-sm mb-4">Release Year</label>
         <Input
           placeholder="Release Year"
           type="number"
@@ -83,7 +83,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Director</label>
+        <label className="text-sm mb-4">Director</label>
         <Input
           placeholder="Director"
           value={director}
@@ -92,7 +92,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Cast (comma separated)</label>
+        <label className="text-sm mb-4">Cast (comma separated)</label>
         <Input
           placeholder="Cast (comma separated)"
           value={cast}
@@ -101,7 +101,9 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Streaming Links (comma separated)</label>
+        <label className="text-sm mb-4">
+          Streaming Links (comma separated)
+        </label>
         <Input
           placeholder="Streaming Links (comma separated)"
           value={streamingLinks}
@@ -110,7 +112,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Access URL</label>
+        <label className="text-sm mb-4">Access URL</label>
         <Input
           placeholder="Access URL"
           value={accessUrl}
@@ -119,7 +121,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Price to Buy</label>
+        <label className="text-sm mb-4">Price to Buy</label>
         <Input
           placeholder="Price to Buy"
           type="number"
@@ -129,7 +131,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Price to Rent</label>
+        <label className="text-sm mb-4">Price to Rent</label>
         <Input
           placeholder="Price to Rent"
           type="number"
@@ -139,7 +141,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
       </div>
 
       <div className="flex flex-col">
-        <label className="text-sm">Discount (%)</label>
+        <label className="text-sm mb-4">Discount (%)</label>
         <Input
           placeholder="Discount (%)"
           type="number"
@@ -148,7 +150,12 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
         />
       </div>
 
-      <Button onClick={handleSubmit}>Update Movie</Button>
+      <button
+        className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+        onClick={handleSubmit}
+      >
+        Update Movie
+      </button>
     </div>
   );
 };

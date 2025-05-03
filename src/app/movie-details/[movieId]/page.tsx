@@ -1,15 +1,24 @@
 "use client";
 
+import MovieReviews from "@/components/movie/movieReviews";
 import { Button } from "@/components/ui/button";
 import { useGetMovieByIdQuery } from "@/features/movies/moviesApi";
-import { useState } from "react";
-import MovieReviews from "@/components/movie/movieReviews";
-import { useInitiatePaymentMutation } from "@/features/payment/paymentApi"; // Import payment API mutation
-import { toast } from "react-hot-toast";
-import { BsCalendarDate, BsCameraReels, BsCurrencyDollar, BsFilm, BsPeople, BsPerson, BsTags } from "react-icons/bs";
-import { useSelector } from "react-redux";
+import { useInitiatePaymentMutation } from "@/features/payment/paymentApi";
 import { RootState } from "@/store";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
+// Import payment API mutation
+import { toast } from "react-hot-toast";
+import {
+  BsCalendarDate,
+  BsCameraReels,
+  BsCurrencyDollar,
+  BsFilm,
+  BsPeople,
+  BsPerson,
+  BsTags,
+} from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 interface MovieDetailsProps {
   params: { movieId: string };
@@ -25,7 +34,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
   const { data: movie, isLoading } = useGetMovieByIdQuery(movieId);
   const user = useSelector((state: RootState) => state.auth.user);
 
-  console.log('movie', movie)
+  console.log("movie", movie);
 
   const [likes, setLikes] = useState<{ [reviewId: number]: boolean }>({});
   const [comments, setComments] = useState<{ [reviewId: number]: Comment[] }>(
@@ -47,9 +56,9 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
 
   const handleRentNow = async () => {
     try {
-      if(!user) router.push("/login");
+      if (!user) router.push("/login");
       const tranId = `TRX-${Date.now()}`;
-  
+
       const response = await initiatePayment({
         total_amount: movie.priceBuy,
         tran_id: tranId,
@@ -80,9 +89,9 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
 
   const handleBuyNow = async () => {
     try {
-      if(!user) router.push("/login");
+      if (!user) router.push("/login");
       const tranId = `TRX-${Date.now()}`;
-  
+
       const response = await initiatePayment({
         total_amount: movie.priceBuy,
         tran_id: tranId,
@@ -96,7 +105,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
           address: "Dhaka",
         },
       }).unwrap();
-  
+
       if (response.GatewayPageURL) {
         toast.success("Redirecting to payment...", { duration: 3000 });
         window.location.href = response.GatewayPageURL;
@@ -108,7 +117,14 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
       toast.error("An error occurred while initiating payment.");
     }
   };
-  
+
+  const hasAccess = movie.MovieAccess?.some(
+    (access: any) => access.userId == user?.id
+  );
+
+  const userAccess = movie.MovieAccess?.find(
+    (access: any) => access.userId == user?.id
+  );
 
   return (
     <div className="max-w-6xl mx-auto px-12 py-24 text-white">
@@ -132,7 +148,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
       </div>
 
       {/* Movie Info */}
-      <div className="mt-10 grid md:grid-cols-2 gap-6">
+      <div className="mt-10 grid md:grid-cols-1 gap-6">
         <div className="space-y-4 text-md text-gray-300">
           <div className="flex items-center gap-2">
             <BsCalendarDate />
@@ -185,20 +201,36 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
           </div>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="flex flex-col justify-center items-start gap-4">
-          <Button
-            className="w-full bg-blue-400 hover:bg-blue-500 text-white text-lg px-6 py-6 rounded-md cursor-pointer"
-            onClick={handleRentNow}
-          >
-            Rent Now for ${movie.priceRent.toFixed(2)}
-          </Button>
-          <Button
-            className="w-full bg-[#2C2A4A] hover:bg-[#2C2A4A] text-white text-lg px-6 py-6 rounded-md cursor-pointer"
-            onClick={handleBuyNow}
-          >
-            Buy Now for ${movie.priceBuy.toFixed(2)}
-          </Button>
+        <div className="mt-6 space-x-4">
+          {hasAccess && userAccess ? (
+            <a
+              href={userAccess.accessLink}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white text-lg px-6 py-6 rounded-md cursor-pointer">
+                Watch Now
+              </Button>
+            </a>
+          ) : (
+            <>
+              {/* CTA Buttons */}
+              <div className="flex flex-col justify-center items-start gap-4">
+                <Button
+                  className="w-full bg-blue-400 hover:bg-blue-500 text-white text-lg px-6 py-6 rounded-md cursor-pointer"
+                  onClick={handleRentNow}
+                >
+                  Rent Now for ${movie.priceRent.toFixed(2)}
+                </Button>
+                <Button
+                  className="w-full bg-[#2C2A4A] hover:bg-[#2C2A4A] text-white text-lg px-6 py-6 rounded-md cursor-pointer"
+                  onClick={handleBuyNow}
+                >
+                  Buy Now for ${movie.priceBuy.toFixed(2)}
+                </Button>
+              </div>
+            </>
+          )}
         </div>
       </div>
 

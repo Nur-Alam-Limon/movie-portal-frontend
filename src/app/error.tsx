@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 const Error = () => {
  return (
    <div className="flex flex-col items-center justify-center min-h-screen px-4 bg-background text-foreground">
-     <div className="flex items-center gap-4 bg-white shadow-lg p-8 rounded-xl">
+     <div className="flex items-center gap-4 bg-white shadow-lg p-8 rounded-xl text-black">
        <FaExclamationTriangle className="text-red-500 text-6xl" />
        <div>
          <h1 className="text-4xl font-bold">Oops! Something went wrong.</h1>

@@ -7,8 +7,14 @@ import {
   FaLinkedinIn,
 } from "react-icons/fa"; 
 import { Button } from "../ui/button";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 const Footer: React.FC = () => {
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dashboardHref =
+    user?.role === "admin" ? "/admin" : user?.role === "user" ? "/user" : "/login";
+
   return (
     <footer className="px-4 sm:px-16 md:px-16 bg-[#2C2A4A] text-white py-6">
       <div className="container mx-auto space-y-6">
@@ -68,12 +74,12 @@ const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2 text-gray-400">
               <li>
-                <a href="/products" className="hover:text-blue-400">
-                  Products
+                <a href="/browse-movies" className="hover:text-blue-400">
+                  All Movies
                 </a>
               </li>
               <li>
-                <a href="" className="hover:text-blue-400">
+                <a href="/about" className="hover:text-blue-400">
                   About Us
                 </a>
               </li>
@@ -83,7 +89,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li>
-                <a href="/dashboard" className="hover:text-blue-400">
+                <a href={dashboardHref} className="hover:text-blue-400">
                   Dashboard
                 </a>
               </li>

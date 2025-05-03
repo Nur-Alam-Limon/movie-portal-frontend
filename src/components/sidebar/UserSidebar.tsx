@@ -11,7 +11,7 @@ export const UserSidebar = ({
 
   const menuItems = [
     { name: "Home", path: "/user" },
-    { name: "All Movies & Series", path: "/browse-movies" },
+    { name: "All Movies", path: "/browse-movies" },
     { name: "Watchlist", path: "/user/watchlist" },
     { name: "Purchase History", path: "/user/purchase-history" },
     { name: "My Reviews", path: "/user/reviews" }

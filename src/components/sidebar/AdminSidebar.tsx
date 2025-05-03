@@ -11,9 +11,8 @@ export const AdminSidebar = ({
   const menuItems = [
     { name: "Dashboard", path: "/admin" },
     { name: "Movies", path: "/admin/movies" },
-    { name: "Comments", path: "/admin/comments" },
     { name: "Reviews", path: "/admin/reviews" },
-    { name: "Analytics", path: "/admin/analytics" },
+    { name: "Transaction", path: "/admin/transactions" },
   ];
 
   const handleNavigation = (item: { name: string; path: string }) => {
@@ -22,11 +21,11 @@ export const AdminSidebar = ({
   };
 
   return (
-    <aside className="lg:w-72 w-full bg-[#2C2A4A] text-white flex flex-col items-start justify-start min-h-screen border-r border-gray-700 shadow-lg">
+    <aside className="lg:w-72 w-full bg-[#2C2A4A] text-white flex flex-col flex-wrap items-start justify-start h-48 lg:h-auto lg:min-h-screen border-r border-gray-700 shadow-lg">
       <div className="text-2xl font-bold p-6 text-center border-b border-gray-700 w-full text-blue-400">
         Admin Panel
       </div>
-      <ul className="w-full p-4 space-y-4">
+      <ul className="w-full p-4 space-y-4 flex lg:block">
         {menuItems.map((item, index) => (
           <li key={index} className="w-full">
             <div
