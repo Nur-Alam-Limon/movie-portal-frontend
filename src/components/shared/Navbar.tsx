@@ -55,6 +55,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
   const handleLogout = () => {
     dispatch(logout());
+    router.push("/login");
   };
 
   return (

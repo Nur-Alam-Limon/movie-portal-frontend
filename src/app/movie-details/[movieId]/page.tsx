@@ -2,23 +2,14 @@
 
 import { Button } from "@/components/ui/button";
 import { useGetMovieByIdQuery } from "@/features/movies/moviesApi";
-import Image from "next/image";
-import {
-  BsCalendarDate,
-  BsPerson,
-  BsCameraReels,
-  BsPeople,
-  BsFilm,
-  BsCurrencyDollar,
-  BsTags,
-  BsChatLeftText,
-  BsHeart,
-  BsHeartFill,
-} from "react-icons/bs";
 import { useState } from "react";
 import MovieReviews from "@/components/movie/movieReviews";
+import { useInitiatePaymentMutation } from "@/features/payment/paymentApi"; // Import payment API mutation
+import { toast } from "react-hot-toast";
+import { BsCalendarDate, BsCameraReels, BsCurrencyDollar, BsFilm, BsPeople, BsPerson, BsTags } from "react-icons/bs";
 import { useSelector } from "react-redux";
 import { RootState } from "@/store";
+import { useRouter } from "next/navigation";
 
 interface MovieDetailsProps {
   params: { movieId: string };
@@ -32,6 +23,7 @@ interface Comment {
 export default function MovieDetailsPage({ params }: MovieDetailsProps) {
   const { movieId } = params;
   const { data: movie, isLoading } = useGetMovieByIdQuery(movieId);
+  const user = useSelector((state: RootState) => state.auth.user);
 
   console.log('movie', movie)
 
@@ -43,30 +35,80 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
     {}
   );
 
+  const router = useRouter();
+
+  // Payment API hook
+  const [initiatePayment] = useInitiatePaymentMutation();
+
   if (isLoading)
     return <p className="text-center mt-10 text-white">Loading...</p>;
   if (!movie)
     return <p className="text-center mt-10 text-white">No movie found</p>;
 
-  const handleLike = (reviewId: number) => {
-    setLikes((prev) => ({ ...prev, [reviewId]: !prev[reviewId] }));
-  };
-
-  const handleAddComment = (reviewId: number) => {
-    if (!newComment[reviewId]) return;
-
-    setComments((prev) => ({
-      ...prev,
-      [reviewId]: [
-        ...(prev[reviewId] || []),
-        {
-          id: Date.now(),
-          text: newComment[reviewId],
+  const handleRentNow = async () => {
+    try {
+      if(!user) router.push("/login");
+      const tranId = `TRX-${Date.now()}`;
+  
+      const response = await initiatePayment({
+        total_amount: movie.priceBuy,
+        tran_id: tranId,
+        movieID: parseInt(movieId),
+        userID: user?.id, // Make sure user is available in your context
+        accessType: "RENT",
+        customer: {
+          name: "User",
+          email: user?.email,
+          phone: "01700000000", // fallback if phone is optional
+          address: "Dhaka",
         },
-      ],
-    }));
-    setNewComment((prev) => ({ ...prev, [reviewId]: "" }));
+      }).unwrap();
+
+      if (response.GatewayPageURL) {
+        window.location.href = response.GatewayPageURL;
+        toast.success("Payment initiated successfully! Redirecting...", {
+          duration: 3000,
+        });
+      } else {
+        toast.error("Failed to initiate payment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+      toast.error("An error occurred while initiating payment.");
+    }
   };
+
+  const handleBuyNow = async () => {
+    try {
+      if(!user) router.push("/login");
+      const tranId = `TRX-${Date.now()}`;
+  
+      const response = await initiatePayment({
+        total_amount: movie.priceBuy,
+        tran_id: tranId,
+        movieID: parseInt(movieId),
+        userID: user?.id, // Make sure user is available in your context
+        accessType: "BUY",
+        customer: {
+          name: "User",
+          email: user?.email,
+          phone: "01700000000", // fallback if phone is optional
+          address: "Dhaka",
+        },
+      }).unwrap();
+  
+      if (response.GatewayPageURL) {
+        toast.success("Redirecting to payment...", { duration: 3000 });
+        window.location.href = response.GatewayPageURL;
+      } else {
+        toast.error("Failed to initiate payment. Please try again.");
+      }
+    } catch (error) {
+      console.error("Payment Error:", error);
+      toast.error("An error occurred while initiating payment.");
+    }
+  };
+  
 
   return (
     <div className="max-w-6xl mx-auto px-12 py-24 text-white">
@@ -145,10 +187,16 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
 
         {/* CTA Buttons */}
         <div className="flex flex-col justify-center items-start gap-4">
-          <Button className="w-full bg-blue-400 hover:bg-blue-500 text-white text-lg px-6 py-6 rounded-md">
+          <Button
+            className="w-full bg-blue-400 hover:bg-blue-500 text-white text-lg px-6 py-6 rounded-md cursor-pointer"
+            onClick={handleRentNow}
+          >
             Rent Now for ${movie.priceRent.toFixed(2)}
           </Button>
-          <Button className="w-full bg-[#2C2A4A] hover:bg-[#2C2A4A] text-white text-lg px-6 py-6 rounded-md">
+          <Button
+            className="w-full bg-[#2C2A4A] hover:bg-[#2C2A4A] text-white text-lg px-6 py-6 rounded-md cursor-pointer"
+            onClick={handleBuyNow}
+          >
             Buy Now for ${movie.priceBuy.toFixed(2)}
           </Button>
         </div>
@@ -156,7 +204,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
 
       {/* Reviews Section */}
       <div className="mt-20">
-        <MovieReviews reviews={movie.reviews}/>
+        <MovieReviews reviews={movie.reviews} />
       </div>
     </div>
   );

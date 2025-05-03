@@ -1,5 +1,5 @@
 import { createApi } from '@reduxjs/toolkit/query/react';
-import { baseQuery } from '../../lib/baseApi';
+import baseQuery from '../../lib/baseApi';
 
 export const paymentApi = createApi({
   reducerPath: 'paymentApi',

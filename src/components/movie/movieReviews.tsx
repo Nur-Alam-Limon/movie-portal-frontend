@@ -1,6 +1,16 @@
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useAddCommentMutation } from "@/features/comments/commentsApi";
 import { useToggleLikeMutation } from "@/features/likes/likesApi";
+import { useAddReviewMutation } from "@/features/reviews/reviewsApi";
 import { RootState } from "@/store";
+import { Star } from "lucide-react";
 import { useState } from "react";
 import { BsHeart, BsHeartFill, BsChatDots } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -37,6 +47,14 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
   const [addComment] = useAddCommentMutation();
   const [toggleLike] = useToggleLikeMutation();
 
+  const [editMovieType, setEditMovieType] = useState<"review" | null>(null);
+  const [inputText, setInputText] = useState("");
+  const [rating, setRating] = useState(0);
+  const [tags, setTags] = useState<string[]>([]);
+  const [tagInput, setTagInput] = useState("");
+  const [spoiler, setSpoiler] = useState(false);
+  const [addReview] = useAddReviewMutation();
+
   const isLiked = (review: Review) =>
     user && review.ReviewLike?.some((like) => like.userId === user.id);
 
@@ -61,9 +79,110 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
 
   return (
     <section className="mt-16 space-y-8 px-4 sm:px-0">
-      <h2 className="text-3xl font-bold text-white border-b border-gray-600 pb-2 tracking-wide">
-        🎥 Audience Reviews
-      </h2>
+      <div className="flex item-center justify-between border-b border-gray-600 pb-2 tracking-wide">
+        <h2 className="text-3xl font-bold text-white">🎥 Audience Reviews</h2>
+
+        <Dialog>
+          <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
+            <button className="flex items-center gap-2 px-2 py-2 text-lg text-blue-400 rounded hover:text-blue-600 transition cursor-pointer">
+              <Star className="w-7 h-7" /> Add a Review
+            </button>
+          </DialogTrigger>
+          {editMovieType === "review" && (
+            <DialogContent className="max-w-2xl p-8 bg-[#1f1d36]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+              <DialogHeader>
+                <DialogTitle className="text-xl font-semibold">
+                  Add Review
+                </DialogTitle>
+                <DialogDescription className="text-gray-300 mt-2">
+                  Share your thoughts and give this movie a rating.
+                </DialogDescription>
+              </DialogHeader>
+
+              {/* Star Rating */}
+              <div className="flex gap-2 items-center mt-4">
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
+                  <Star
+                    key={star}
+                    className={`w-6 h-6 cursor-pointer transition ${
+                      star <= rating
+                        ? "text-yellow-400 fill-yellow-400"
+                        : "text-gray-500"
+                    }`}
+                    onClick={() => setRating(star)}
+                  />
+                ))}
+              </div>
+
+              {/* Review Input */}
+              <textarea
+                placeholder="Write your review..."
+                className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                rows={4}
+                value={inputText}
+                onChange={(e) => setInputText(e.target.value)}
+              />
+
+              {/* Tags Input */}
+              <div className="mt-3 flex flex-wrap gap-2 items-center">
+                {tags.map((tag, idx) => (
+                  <span
+                    key={idx}
+                    className="bg-gray-600 px-2 py-1 rounded text-sm flex items-center gap-1"
+                  >
+                    #{tag}
+                    <button
+                      className="ml-1 text-red-400"
+                      onClick={() => setTags(tags.filter((_, i) => i !== idx))}
+                    >
+                      ×
+                    </button>
+                  </span>
+                ))}
+                <input
+                  type="text"
+                  placeholder="Add tag"
+                  className="p-2 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                  value={tagInput}
+                  onChange={(e) => setTagInput(e.target.value)}
+                />
+              </div>
+
+              {/* Spoiler Checkbox */}
+              <div className="mt-4">
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    checked={spoiler}
+                    onChange={(e) => setSpoiler(e.target.checked)}
+                  />
+                  <span className="text-md text-gray-300">
+                    Contains spoilers
+                  </span>
+                </label>
+              </div>
+
+              {/* Submit Review Button */}
+              <button
+                className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+                onClick={async () => {
+                  if (inputText && rating) {
+                    await addReview({
+                      rating,
+                      text: inputText,
+                      tags,
+                      spoiler,
+                    });
+                    setEditMovieType(null); // Close the modal
+                  }
+                }}
+              >
+                Submit Review
+              </button>
+            </DialogContent>
+          )}
+        </Dialog>
+      </div>
 
       {reviews.map((review) => (
         <div
@@ -178,6 +297,92 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
           </div>
         </div>
       ))}
+      <Dialog>
+        <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
+          <button className="flex items-center gap-2 px-2 py-2 text-sm text-white rounded hover:text-yellow-400 transition cursor-pointer">
+            <Star className="w-5 h-5" /> Add a Review
+          </button>
+        </DialogTrigger>
+        {editMovieType === "review" && (
+          <DialogContent className="max-w-2xl p-8 bg-[#1f1d36]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+            <DialogHeader>
+              <DialogTitle className="text-xl font-semibold">
+                Add Review
+              </DialogTitle>
+              <DialogDescription className="text-gray-300 mt-2">
+                Share your thoughts and give this movie a rating.
+              </DialogDescription>
+            </DialogHeader>
+
+            {/* Star Rating */}
+            <div className="flex gap-2 items-center mt-4">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
+                <Star
+                  key={star}
+                  className={`w-6 h-6 cursor-pointer transition ${
+                    star <= rating
+                      ? "text-yellow-400 fill-yellow-400"
+                      : "text-gray-500"
+                  }`}
+                  onClick={() => setRating(star)}
+                />
+              ))}
+            </div>
+
+            {/* Review Input */}
+            <textarea
+              placeholder="Write your review..."
+              className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+              rows={4}
+              value={inputText}
+              onChange={(e) => setInputText(e.target.value)}
+            />
+
+            {/* Tags Input */}
+            <div className="mt-3 flex flex-wrap gap-2 items-center">
+              {tags.map((tag, idx) => (
+                <span
+                  key={idx}
+                  className="bg-gray-600 px-2 py-1 rounded text-sm flex items-center gap-1"
+                >
+                  #{tag}
+                  <button
+                    className="ml-1 text-red-400"
+                    onClick={() => setTags(tags.filter((_, i) => i !== idx))}
+                  >
+                    ×
+                  </button>
+                </span>
+              ))}
+              <input
+                type="text"
+                placeholder="Add tag"
+                className="p-2 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                value={tagInput}
+                onChange={(e) => setTagInput(e.target.value)}
+              />
+            </div>
+
+            {/* Submit Review Button */}
+            <button
+              className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+              onClick={async () => {
+                if (inputText && rating) {
+                  await addReview({
+                    rating,
+                    text: inputText,
+                    tags,
+                    spoiler,
+                  });
+                  setEditMovieType(null); // Close the modal
+                }
+              }}
+            >
+              Submit Review
+            </button>
+          </DialogContent>
+        )}
+      </Dialog>
     </section>
   );
 }

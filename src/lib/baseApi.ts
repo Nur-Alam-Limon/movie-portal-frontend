@@ -14,6 +14,7 @@ const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 
   const result = await fetchBaseQuery({
     baseUrl: "http://localhost:3005/api",
+    credentials: "include",
     prepareHeaders: (headers) => {
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
