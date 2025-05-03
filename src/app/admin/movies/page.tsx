@@ -1,7 +1,7 @@
 "use client";
 
 import EditMovieForm from "@/components/admin/EditMovieForm";
-import withAdminProtection from "@/components/auth/withAdminProtection";
+import { AdminProtection } from "@/components/auth/Protection";
 import MovieCard from "@/components/movie/MovieCard";
 import { Button } from "@/components/ui/button";
 import {
@@ -227,4 +227,4 @@ function MoviesPage() {
   );
 }
 
-export default withAdminProtection(MoviesPage);
+export default AdminProtection(MoviesPage);

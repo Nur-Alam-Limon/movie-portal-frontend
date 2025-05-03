@@ -1,5 +1,5 @@
 "use client";
-import withAdminProtection from "@/components/auth/withAdminProtection";
+import { AdminProtection } from "@/components/auth/Protection";
 
 function AdminAnalyticsPage() {
 
@@ -8,4 +8,4 @@ function AdminAnalyticsPage() {
   );
 }
 
-export default withAdminProtection(AdminAnalyticsPage);
+export default AdminProtection(AdminAnalyticsPage);

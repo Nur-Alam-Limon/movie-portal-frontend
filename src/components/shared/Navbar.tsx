@@ -58,6 +58,9 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
     router.push("/login");
   };
 
+  const dashboardHref =
+    user?.role === "admin" ? "/admin" : user?.role === "user" ? "/user" : "/login";
+
   return (
     <nav className="bg-[#2C2A4A] text-white py-6 px-8 lg:px-16 flex justify-between items-center shadow-md sticky top-0 z-50">
       {/* Logo */}
@@ -124,7 +127,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             {user ? (
               <>
                 <Link
-                  href="/dashboard"
+                  href={dashboardHref}
                   className="block hover:text-[#71A9F7] transition flex items-center"
                 >
                   <FaUserCircle className="mr-1" /> Dashboard
@@ -181,7 +184,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
         {user ? (
           <>
             <Link
-              href="/dashboard"
+              href={dashboardHref}
               className="hover:text-[#71A9F7] transition flex items-center"
             >
               <FaUserCircle className="mr-1" /> Dashboard

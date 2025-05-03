@@ -1,5 +1,5 @@
 "use client";
-import withAdminProtection from "@/components/auth/withAdminProtection";
+import { AdminProtection } from "@/components/auth/Protection";
 
 function AdminReviewsPage() {
 
@@ -8,4 +8,4 @@ function AdminReviewsPage() {
   );
 }
 
-export default withAdminProtection(AdminReviewsPage);
+export default AdminProtection(AdminReviewsPage);

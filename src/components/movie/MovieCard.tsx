@@ -48,8 +48,6 @@ export default function MovieCard({ movie }: MovieCardProps) {
   const [toggleWatchlist] = useToggleWatchlistMutation(); // Use the toggle watchlist mutation
   const { data: watchlist } = useGetMyWatchlistQuery(null); // Fetch the user's watchlist
 
-  console.log("Watchlist", watchlist);
-
   // Check if the movie is in the watchlist
   useEffect(() => {
     if (watchlist) {

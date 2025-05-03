@@ -8,7 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { useAddCommentMutation } from "@/features/comments/commentsApi";
 import { useToggleLikeMutation } from "@/features/likes/likesApi";
-import { useAddReviewMutation } from "@/features/reviews/reviewsApi";
+import {
+  useAddReviewMutation,
+  useDeleteReviewMutation,
+  useUpdateReviewMutation,
+} from "@/features/reviews/reviewsApi";
 import { RootState } from "@/store";
 import { Star } from "lucide-react";
 import { useState } from "react";
@@ -35,6 +39,8 @@ interface Review {
   spoiler?: boolean;
   Comment: Comment[];
   ReviewLike?: ReviewLike[];
+  approved: boolean;
+  userId: number;
 }
 
 interface MovieReviewsProps {
@@ -54,6 +60,13 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
   const [tagInput, setTagInput] = useState("");
   const [spoiler, setSpoiler] = useState(false);
   const [addReview] = useAddReviewMutation();
+
+  const [editingReviewId, setEditingReviewId] = useState<number | null>(null);
+  const [editInputText, setEditInputText] = useState("");
+  const [editRating, setEditRating] = useState(0);
+
+  const [updateReview] = useUpdateReviewMutation();
+  const [deleteReview] = useDeleteReviewMutation();
 
   const isLiked = (review: Review) =>
     user && review.ReviewLike?.some((like) => like.userId === user.id);
@@ -76,6 +89,26 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
   if (!reviews?.length) {
     return <p className="text-gray-400 mt-6">No reviews available.</p>;
   }
+
+  const startEditReview = (review: Review) => {
+    setEditingReviewId(review.id);
+    setEditInputText(review.text);
+    setEditRating(review.rating);
+  };
+
+  const handleUpdateReview = async () => {
+    if (!editingReviewId || !editInputText) return;
+    await updateReview({
+      id: editingReviewId,
+      data: { text: editInputText, rating: editRating },
+    });
+    setEditingReviewId(null);
+  };
+
+  const handleDeleteReview = async (id: number) => {
+    if (!confirm("Are you sure you want to delete this review?")) return;
+    await deleteReview(id);
+  };
 
   return (
     <section className="mt-16 space-y-8 px-4 sm:px-0">
@@ -295,93 +328,67 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
               </div>
             )}
           </div>
+          {user?.id === review.userId && review.approved === false && (
+            <div className="mt-2 text-lg flex gap-6 pt-3">
+              <button
+                onClick={() => startEditReview(review)}
+                className="text-blue-400 hover:underline"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDeleteReview(review.id)}
+                className="text-red-400 hover:underline"
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       ))}
-      <Dialog>
-        <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
-          <button className="flex items-center gap-2 px-2 py-2 text-sm text-white rounded hover:text-yellow-400 transition cursor-pointer">
-            <Star className="w-5 h-5" /> Add a Review
-          </button>
-        </DialogTrigger>
-        {editMovieType === "review" && (
-          <DialogContent className="max-w-2xl p-8 bg-[#1f1d36]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
-            <DialogHeader>
-              <DialogTitle className="text-xl font-semibold">
-                Add Review
-              </DialogTitle>
-              <DialogDescription className="text-gray-300 mt-2">
-                Share your thoughts and give this movie a rating.
-              </DialogDescription>
-            </DialogHeader>
 
-            {/* Star Rating */}
-            <div className="flex gap-2 items-center mt-4">
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
-                <Star
-                  key={star}
-                  className={`w-6 h-6 cursor-pointer transition ${
-                    star <= rating
-                      ? "text-yellow-400 fill-yellow-400"
-                      : "text-gray-500"
-                  }`}
-                  onClick={() => setRating(star)}
-                />
-              ))}
-            </div>
-
-            {/* Review Input */}
-            <textarea
-              placeholder="Write your review..."
-              className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
-              rows={4}
-              value={inputText}
-              onChange={(e) => setInputText(e.target.value)}
-            />
-
-            {/* Tags Input */}
-            <div className="mt-3 flex flex-wrap gap-2 items-center">
-              {tags.map((tag, idx) => (
-                <span
-                  key={idx}
-                  className="bg-gray-600 px-2 py-1 rounded text-sm flex items-center gap-1"
-                >
-                  #{tag}
-                  <button
-                    className="ml-1 text-red-400"
-                    onClick={() => setTags(tags.filter((_, i) => i !== idx))}
-                  >
-                    ×
-                  </button>
-                </span>
-              ))}
-              <input
-                type="text"
-                placeholder="Add tag"
-                className="p-2 rounded bg-[#2a2a40] border border-gray-600 text-white"
-                value={tagInput}
-                onChange={(e) => setTagInput(e.target.value)}
+      <Dialog
+        open={!!editingReviewId}
+        onOpenChange={() => setEditingReviewId(null)}
+      >
+        <DialogContent className="max-w-xl p-6 bg-[#1f1d36]/90 text-white">
+          <DialogHeader>
+            <DialogTitle>Edit Your Review</DialogTitle>
+          </DialogHeader>
+          <div className="flex gap-2 mt-2">
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
+              <Star
+                key={star}
+                className={`w-5 h-5 cursor-pointer ${
+                  star <= editRating
+                    ? "text-yellow-400 fill-yellow-400"
+                    : "text-gray-500"
+                }`}
+                onClick={() => setEditRating(star)}
               />
-            </div>
-
-            {/* Submit Review Button */}
+            ))}
+          </div>
+          <textarea
+            value={editInputText}
+            onChange={(e) => setEditInputText(e.target.value)}
+            className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+            rows={4}
+          />
+          <div className="mt-4 flex justify-end gap-2">
             <button
-              className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
-              onClick={async () => {
-                if (inputText && rating) {
-                  await addReview({
-                    rating,
-                    text: inputText,
-                    tags,
-                    spoiler,
-                  });
-                  setEditMovieType(null); // Close the modal
-                }
-              }}
+              onClick={() => setEditingReviewId(null)}
+              className="px-4 py-2 rounded bg-gray-600 hover:bg-gray-700"
             >
-              Submit Review
+              Cancel
             </button>
-          </DialogContent>
-        )}
+            <button
+              onClick={handleUpdateReview}
+              className="px-4 py-2 rounded bg-blue-500 hover:bg-blue-600"
+            >
+              Save
+            </button>
+          </div>
+        </DialogContent>
       </Dialog>
     </section>
   );

@@ -32,6 +32,18 @@ export const paymentApi = createApi({
         body: data,
       }),
     }),
+    getAllTransactions: builder.query({
+      query: () => ({
+        url: '/payments/admin/transactions',
+        method: 'GET',
+      }),
+    }),
+    getUserTransactions: builder.query({
+      query: () => ({
+        url: '/payments/transactions',
+        method: 'GET',
+      }),
+    }),
   }),
 });
 
@@ -40,4 +52,6 @@ export const {
   usePaymentSuccessCallbackMutation,
   usePaymentFailCallbackMutation,
   usePaymentCancelCallbackMutation,
+  useGetAllTransactionsQuery,
+  useGetUserTransactionsQuery,
 } = paymentApi;

@@ -2,18 +2,19 @@
 
 import { useRouter } from "next/navigation";
 
-export const AdminSidebar = ({
+export const UserSidebar = ({
   onSelectSection,
 }: {
   onSelectSection: (section: string) => void;
 }) => {
   const router = useRouter();
+
   const menuItems = [
-    { name: "Dashboard", path: "/admin" },
-    { name: "Movies", path: "/admin/movies" },
-    { name: "Comments", path: "/admin/comments" },
-    { name: "Reviews", path: "/admin/reviews" },
-    { name: "Analytics", path: "/admin/analytics" },
+    { name: "Home", path: "/user" },
+    { name: "All Movies & Series", path: "/browse-movies" },
+    { name: "Watchlist", path: "/user/watchlist" },
+    { name: "Purchase History", path: "/user/purchase-history" },
+    { name: "My Reviews", path: "/user/reviews" }
   ];
 
   const handleNavigation = (item: { name: string; path: string }) => {
@@ -24,7 +25,7 @@ export const AdminSidebar = ({
   return (
     <aside className="lg:w-72 w-full bg-[#2C2A4A] text-white flex flex-col items-start justify-start min-h-screen border-r border-gray-700 shadow-lg">
       <div className="text-2xl font-bold p-6 text-center border-b border-gray-700 w-full text-blue-400">
-        Admin Panel
+        User Panel
       </div>
       <ul className="w-full p-4 space-y-4">
         {menuItems.map((item, index) => (
