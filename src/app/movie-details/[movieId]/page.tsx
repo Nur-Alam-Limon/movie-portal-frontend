@@ -11,26 +11,66 @@ import {
   BsFilm,
   BsCurrencyDollar,
   BsTags,
+  BsChatLeftText,
+  BsHeart,
+  BsHeartFill,
 } from "react-icons/bs";
+import { useState } from "react";
+import MovieReviews from "@/components/movie/movieReviews";
+import { useSelector } from "react-redux";
+import { RootState } from "@/store";
 
 interface MovieDetailsProps {
   params: { movieId: string };
+}
+
+interface Comment {
+  id: number;
+  text: string;
 }
 
 export default function MovieDetailsPage({ params }: MovieDetailsProps) {
   const { movieId } = params;
   const { data: movie, isLoading } = useGetMovieByIdQuery(movieId);
 
+  console.log('movie', movie)
+
+  const [likes, setLikes] = useState<{ [reviewId: number]: boolean }>({});
+  const [comments, setComments] = useState<{ [reviewId: number]: Comment[] }>(
+    {}
+  );
+  const [newComment, setNewComment] = useState<{ [reviewId: number]: string }>(
+    {}
+  );
+
   if (isLoading)
     return <p className="text-center mt-10 text-white">Loading...</p>;
   if (!movie)
     return <p className="text-center mt-10 text-white">No movie found</p>;
 
-  console.log("Moviue", movie);
+  const handleLike = (reviewId: number) => {
+    setLikes((prev) => ({ ...prev, [reviewId]: !prev[reviewId] }));
+  };
+
+  const handleAddComment = (reviewId: number) => {
+    if (!newComment[reviewId]) return;
+
+    setComments((prev) => ({
+      ...prev,
+      [reviewId]: [
+        ...(prev[reviewId] || []),
+        {
+          id: Date.now(),
+          text: newComment[reviewId],
+        },
+      ],
+    }));
+    setNewComment((prev) => ({ ...prev, [reviewId]: "" }));
+  };
 
   return (
     <div className="max-w-6xl mx-auto px-12 py-24 text-white">
-      {/* Hero Banner */}
+      {/* Hero */}
       <div
         className="relative h-[500px] w-full rounded-xl overflow-hidden shadow-lg"
         style={{
@@ -43,6 +83,7 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
         }}
       ></div>
 
+      {/* Basic Info */}
       <div className="flex flex-col justify-end pb-6 mt-8">
         <h1 className="text-5xl font-bold mb-2">{movie.title}</h1>
         <p className="text-gray-300 max-w-2xl">{movie.synopsis}</p>
@@ -52,49 +93,50 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
       <div className="mt-10 grid md:grid-cols-2 gap-6">
         <div className="space-y-4 text-md text-gray-300">
           <div className="flex items-center gap-2">
-            <BsCalendarDate />{" "}
+            <BsCalendarDate />
             <span>
               <strong>Release Year:</strong> {movie.releaseYear}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsPerson />{" "}
+            <BsPerson />
             <span>
               <strong>Director:</strong> {movie.director}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsCameraReels />{" "}
+            <BsCameraReels />
             <span>
               <strong>Genres:</strong> {movie.genres.join(", ")}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsPeople />{" "}
+            <BsPeople />
             <span>
               <strong>Cast:</strong> {movie.cast.join(", ")}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsFilm />{" "}
+            <BsFilm />
             <span>
-              <strong>Streaming On:</strong> {movie.streamingLinks.join(", ")}
+              <strong>Streaming On:</strong>{" "}
+              {movie.streamingLinks.join(", ") || "N/A"}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsCurrencyDollar />{" "}
+            <BsCurrencyDollar />
             <span>
               <strong>Rent:</strong> ${movie.priceRent.toFixed(2)}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsCurrencyDollar />{" "}
+            <BsCurrencyDollar />
             <span>
               <strong>Buy:</strong> ${movie.priceBuy.toFixed(2)}
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <BsTags />{" "}
+            <BsTags />
             <span>
               <strong>Discount:</strong> {movie.discount}%
             </span>
@@ -110,6 +152,11 @@ export default function MovieDetailsPage({ params }: MovieDetailsProps) {
             Buy Now for ${movie.priceBuy.toFixed(2)}
           </Button>
         </div>
+      </div>
+
+      {/* Reviews Section */}
+      <div className="mt-20">
+        <MovieReviews reviews={movie.reviews}/>
       </div>
     </div>
   );

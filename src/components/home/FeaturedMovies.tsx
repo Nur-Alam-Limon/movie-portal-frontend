@@ -3,7 +3,7 @@ import React from "react";
 import Loading from "@/app/loading";
 import Error from "@/app/error";
 import { useGetAllMoviesQuery } from "@/features/movies/moviesApi";
-import MovieCard from "./MovieCard";
+import MovieCard from "../movie/MovieCard";
 
 const FeaturedMovies: React.FC = () => {
   const { data: movies, isLoading, isError } = useGetAllMoviesQuery(null);

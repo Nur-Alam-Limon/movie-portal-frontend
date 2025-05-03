@@ -203,7 +203,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
               )}
             </Dialog>
 
-            {/* REVIEW Modal */}
+             {/* REVIEW Modal */}
             <Dialog>
               <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
                 <button className="flex items-center gap-2 px-2 py-2 text-sm text-white rounded hover:text-yellow-400 transition cursor-pointer">
@@ -223,7 +223,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
                   {/* Star Rating */}
                   <div className="flex gap-2 items-center mt-4">
-                    {[1, 2, 3, 4, 5, 6,7,8,9,10].map((star) => (
+                    {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
                       <Star
                         key={star}
                         className={`w-6 h-6 cursor-pointer transition ${

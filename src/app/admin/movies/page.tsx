@@ -2,7 +2,7 @@
 
 import EditMovieForm from "@/components/admin/EditMovieForm";
 import withAdminProtection from "@/components/auth/withAdminProtection";
-import MovieCard from "@/components/home/MovieCard";
+import MovieCard from "@/components/movie/MovieCard";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,

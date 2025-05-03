@@ -1,7 +1,7 @@
 "use client";
 
 import Loading from "../loading";
-import MovieCard from "@/components/home/MovieCard";
+import MovieCard from "@/components/movie/MovieCard";
 import { Button } from "@/components/ui/button";
 import { useGetAllMoviesQuery } from "@/features/movies/moviesApi";
 import { useRouter, useSearchParams } from "next/navigation";
