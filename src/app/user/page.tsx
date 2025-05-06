@@ -3,6 +3,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserProtection } from "@/components/auth/Protection";
 import { useGetMyWatchlistQuery } from "@/features/watchlist/watchlistApi";
+import Loading from "../loading";
 
 function UserDashboardPage() {
   const { data, isLoading, isError } = useGetMyWatchlistQuery(null);
@@ -24,7 +25,7 @@ function UserDashboardPage() {
             <CardContent>
               <p className="text-2xl font-bold">
                 {isLoading
-                  ? "Loading..."
+                  ? <Loading/>
                   : Array.isArray(data)
                   ? data.length
                   : 0}

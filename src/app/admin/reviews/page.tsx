@@ -16,6 +16,7 @@ import {
 import { Check, X } from "lucide-react";
 import Image from "next/image";
 import { formatDistanceToNow } from "date-fns";
+import Loading from "@/app/loading";
 
 function AdminReviewsPage() {
   const { data: reviews, isLoading, isError } = useGetAllReviewsQuery(null);
@@ -45,7 +46,7 @@ function AdminReviewsPage() {
       </h1>
 
       {isLoading ? (
-        <p className="text-center text-lg">Loading all reviews...</p>
+        <Loading/>
       ) : isError ? (
         <p className="text-center text-red-500">Failed to load reviews.</p>
       ) : !reviews?.length ? (

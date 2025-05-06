@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/app/loading";
 import { UserProtection } from "@/components/auth/Protection";
 import { useGetUserTransactionsQuery } from "@/features/payment/paymentApi";
 import {
@@ -19,7 +20,7 @@ function PurchaseHistoryPage() {
       </h1>
 
       {isLoading ? (
-        <p className="text-center text-lg">Loading your purchases...</p>
+        <Loading/>
       ) : isError ? (
         <p className="text-center text-red-500">Failed to load purchases.</p>
       ) : data?.length === 0 ? (

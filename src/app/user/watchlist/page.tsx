@@ -3,6 +3,7 @@
 import { useGetMyWatchlistQuery } from "@/features/watchlist/watchlistApi";
 import { UserProtection } from "@/components/auth/Protection";
 import MovieCard from "@/components/movie/MovieCard";
+import Loading from "@/app/loading";
 
 function WatchlistPage() {
   const { data, isLoading, isError } = useGetMyWatchlistQuery(null);
@@ -16,7 +17,7 @@ function WatchlistPage() {
       </h1>
 
       {isLoading ? (
-        <p className="text-center text-lg">Loading your watchlist...</p>
+        <Loading/>
       ) : isError ? (
         <p className="text-center text-red-500">Failed to load watchlist.</p>
       ) : movies.length === 0 ? (

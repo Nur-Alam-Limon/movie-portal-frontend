@@ -1,6 +1,7 @@
 // @ts-ignore
 "use client";
 
+import Loading from "@/app/loading";
 import MovieReviews from "@/components/movie/movieReviews";
 import { Button } from "@/components/ui/button";
 import { useGetMovieByIdQuery } from "@/features/movies/moviesApi";
@@ -26,7 +27,7 @@ interface MovieDetailsProps {
 }
 
 const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
-  const { movieId } = use(params);;
+  const { movieId } = use(params);
   const { data: movie, isLoading } = useGetMovieByIdQuery(movieId);
   const user = useSelector((state: RootState) => state.auth.user);
 
@@ -35,10 +36,13 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
   // Payment API hook
   const [initiatePayment] = useInitiatePaymentMutation();
 
-  if (isLoading)
-    return <p className="text-center mt-10 text-white">Loading...</p>;
+  if (isLoading) return <Loading />;
   if (!movie)
-    return <p className="text-center mt-10 text-white">No movie found</p>;
+    return (
+      <p className="min-h-screen text-center mt-10 text-white">
+        No movie found
+      </p>
+    );
 
   const handleRentNow = async () => {
     try {
@@ -49,12 +53,12 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
         total_amount: movie.priceBuy,
         tran_id: tranId,
         movieID: parseInt(movieId),
-        userID: user?.id, 
+        userID: user?.id,
         accessType: "RENT",
         customer: {
           name: "User",
           email: user?.email,
-          phone: "01700000000", 
+          phone: "01700000000",
           address: "Dhaka",
         },
       }).unwrap();
@@ -82,12 +86,12 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
         total_amount: movie.priceBuy,
         tran_id: tranId,
         movieID: parseInt(movieId),
-        userID: user?.id, 
+        userID: user?.id,
         accessType: "BUY",
         customer: {
           name: "User",
           email: user?.email,
-          phone: "01700000000", 
+          phone: "01700000000",
           address: "Dhaka",
         },
       }).unwrap();
@@ -113,19 +117,18 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto px-12 py-24 text-white">
+    <div className="max-w-6xl mx-auto px-12 py-24 text-white min-h-screen">
       {/* Hero */}
-      <div
-        className="relative h-[500px] w-full rounded-xl overflow-hidden shadow-lg"
-        style={{
-          backgroundImage: `url('${
+      <div className="relative h-[500px] w-full rounded-xl overflow-hidden shadow-lg">
+        <img
+          src={
             movie?.accessUrl ||
             "https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?auto=format&fit=crop&w=1600&q=80"
-          }')`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      ></div>
+          }
+          alt="Movie"
+          className="w-full h-full object-contain"
+        />
+      </div>
 
       {/* Basic Info */}
       <div className="flex flex-col justify-end pb-6 mt-8">
@@ -226,6 +229,6 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
       </div>
     </div>
   );
-}
+};
 
 export default MovieDetailsPage;

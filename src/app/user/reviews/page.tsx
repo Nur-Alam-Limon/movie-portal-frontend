@@ -1,5 +1,6 @@
 "use client";
 
+import Loading from "@/app/loading";
 import { UserProtection } from "@/components/auth/Protection";
 import MovieReviews from "@/components/movie/movieReviews";
 import { useGetUserReviewsQuery } from "@/features/reviews/reviewsApi";
@@ -15,7 +16,7 @@ function MyReviewsPage() {
       </h1>
 
       {isLoading ? (
-        <p className="text-center text-lg">Loading your reviews...</p>
+        <Loading/>
       ) : isError ? (
         <p className="text-center text-red-500">Failed to load reviews.</p>
       ) : !reviews?.length ? (

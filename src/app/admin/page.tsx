@@ -11,6 +11,7 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
+import Loading from "../loading";
 
 function AdminDashboardPage() {
   const { data, isLoading, isError } = useGetDashboardQuery();
@@ -200,7 +201,7 @@ function StatCard({
       </CardHeader>
       <CardContent>
         <p className="text-2xl font-bold">
-          {isLoading ? "Loading..." : value ?? 0}
+          {isLoading ? <Loading/> : value ?? 0}
         </p>
       </CardContent>
     </Card>

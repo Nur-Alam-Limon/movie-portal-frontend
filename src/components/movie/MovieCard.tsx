@@ -83,7 +83,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <>
-      <div className="bg-[#2C2A4A] text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[550px] flex flex-col">
+      <div className="dark:bg-[#2C2A4A] bg-slate-100 text-black dark:text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[550px] flex flex-col">
         <Link href={`/movie-details/${movie.id}`}>
           <div
             className="h-64 w-full bg-cover bg-center shrink-0"
@@ -99,15 +99,15 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <div className="p-6 space-y-3 overflow-hidden flex flex-col flex-1">
           <h2 className="text-2xl font-bold">
             {movie.title}{" "}
-            <span className="text-sm text-gray-400">({movie.releaseYear})</span>
+            <span className="text-sm dark:text-gray-400">({movie.releaseYear})</span>
           </h2>
-          <p className="text-md text-gray-300 line-clamp-3">{movie.synopsis}</p>
-          <div className="text-sm text-gray-400">
-            <strong className="text-gray-200">Genres:</strong>{" "}
+          <p className="text-md dark:text-gray-300 line-clamp-3">{movie.synopsis}</p>
+          <div className="text-sm dark:text-gray-400">
+            <strong className="dark:text-gray-200">Genres:</strong>{" "}
             {movie.genres.join(", ")}
           </div>
-          <div className="text-sm text-gray-400">
-            <strong className="text-gray-200">Director:</strong>{" "}
+          <div className="text-sm dark:text-gray-400">
+            <strong className="dark:text-gray-200">Director:</strong>{" "}
             {movie.director}
           </div>
 
@@ -115,7 +115,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             {/* Add to Watchlist Button */}
             <button
               onClick={handleAddToWatchlist}
-              className="flex items-center gap-2 px-2 text-sm text-white rounded hover:text-blue-400 transition cursor-pointer"
+              className="flex items-center gap-2 px-2 text-sm dark:text-white rounded hover:text-blue-400 transition cursor-pointer"
             >
               <Heart
                 className={`w-5 h-5 ${isInWatchlist ? "text-red-400" : ""}`}
@@ -126,7 +126,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             {/* REVIEW Modal */}
             <Dialog>
               <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
-                <button className="flex items-center gap-2 px-2 py-2 text-sm text-white rounded hover:text-yellow-400 transition cursor-pointer">
+                <button className="flex items-center gap-2 px-2 py-2 text-sm dark:text-white rounded hover:text-yellow-400 transition cursor-pointer">
                   <Star className="w-5 h-5" /> Review
                 </button>
               </DialogTrigger>
@@ -220,6 +220,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                           text: inputText,
                           tags,
                           spoiler,
+                          movieId: Number(movie.id)
                         });
                         setEditMovieType(null); // Close the modal
                       }

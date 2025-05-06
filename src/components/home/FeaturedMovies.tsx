@@ -61,7 +61,7 @@ const FeaturedMovies: React.FC<FeaturedMoviesProps> = ({ headingText, variant })
   }
 
   return (
-    <div className="my-12 px-8 lg:px-16">
+    <div className="my-12 container mx-auto text-center px-4 sm:px-8 lg:px-0">
       <h2 className="text-3xl font-bold mb-6 text-center">{headingText}</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {filteredMovies.map((movie: any) => (
