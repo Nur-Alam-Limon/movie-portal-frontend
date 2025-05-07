@@ -53,11 +53,10 @@ const baseQuery: BaseQueryFn = async (args, api, extraOptions) => {
 
         return retryResult;
       } else {
-        throw new Error("Unable to refresh token");
+        console.error("Unable to refresh token");
       }
     } catch (err) {
       console.error("Token refresh failed", err);
-      throw new Error("Token refresh failed");
     }
   }
 

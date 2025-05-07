@@ -45,14 +45,14 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   const router = useRouter();
   const [addReview] = useAddReviewMutation();
-  const [toggleWatchlist] = useToggleWatchlistMutation(); 
-  const { data: watchlist } = useGetMyWatchlistQuery(null); // Fetch the user's watchlist
+  const [toggleWatchlist] = useToggleWatchlistMutation();
+  const { data: watchlist, refetch } = useGetMyWatchlistQuery(null); // Fetch the user's watchlist
 
   // Check if the movie is in the watchlist
   useEffect(() => {
     if (watchlist) {
       const movieInWatchlist = watchlist.some(
-        (item: any) => item.id === movie.id
+        (item: any) => item.movie.id === movie.id
       );
       setIsInWatchlist(movieInWatchlist);
     }
@@ -69,7 +69,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
     try {
       // Toggle watchlist status
       await toggleWatchlist(movie.id);
-      setIsInWatchlist(!isInWatchlist); // Update the button state
+      await refetch();
+
       toast.success(
         isInWatchlist
           ? "Movie removed from your watchlist!"
@@ -99,9 +100,13 @@ export default function MovieCard({ movie }: MovieCardProps) {
         <div className="p-6 space-y-3 overflow-hidden flex flex-col flex-1">
           <h2 className="text-2xl font-bold">
             {movie.title}{" "}
-            <span className="text-sm dark:text-gray-400">({movie.releaseYear})</span>
+            <span className="text-sm dark:text-gray-400">
+              ({movie.releaseYear})
+            </span>
           </h2>
-          <p className="text-md dark:text-gray-300 line-clamp-3">{movie.synopsis}</p>
+          <p className="text-md dark:text-gray-300 line-clamp-3">
+            {movie.synopsis}
+          </p>
           <div className="text-sm dark:text-gray-400">
             <strong className="dark:text-gray-200">Genres:</strong>{" "}
             {movie.genres.join(", ")}
@@ -120,12 +125,23 @@ export default function MovieCard({ movie }: MovieCardProps) {
               <Heart
                 className={`w-5 h-5 ${isInWatchlist ? "text-red-400" : ""}`}
               />
-              {isInWatchlist ? "Remove Watch" : "Add to Watchlist"}
+              <span className={`${isInWatchlist ? "text-red-400" : ""}`}>{isInWatchlist ? "Remove Watch" : "Add to Watchlist"}</span>
             </button>
 
             {/* REVIEW Modal */}
             <Dialog>
-              <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
+              <DialogTrigger
+                asChild
+                onClick={(e) => {
+                  if (!isLoggedIn) {
+                    e.preventDefault(); 
+                    toast.error("Please log in first");
+                    router.push("/login");
+                    return;
+                  }
+                  setEditMovieType("review");
+                }}
+              >
                 <button className="flex items-center gap-2 px-2 py-2 text-sm dark:text-white rounded hover:text-yellow-400 transition cursor-pointer">
                   <Star className="w-5 h-5" /> Review
                 </button>
@@ -215,14 +231,26 @@ export default function MovieCard({ movie }: MovieCardProps) {
                     className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
                     onClick={async () => {
                       if (inputText && rating) {
-                        await addReview({
-                          rating,
-                          text: inputText,
-                          tags,
-                          spoiler,
-                          movieId: Number(movie.id)
-                        });
-                        setEditMovieType(null); // Close the modal
+                        try {
+                          await addReview({
+                            rating,
+                            text: inputText,
+                            tags,
+                            spoiler,
+                            movieId: Number(movie.id),
+                          });
+                          setEditMovieType(null);
+                          toast.success("Review submitted successfully!");
+                        } catch (error) {
+                          console.error(error);
+                          toast.error(
+                            "Failed to submit review. Please try again."
+                          );
+                        }
+                      } else {
+                        toast.error(
+                          "Please add review text and rating before submitting."
+                        );
                       }
                     }}
                   >

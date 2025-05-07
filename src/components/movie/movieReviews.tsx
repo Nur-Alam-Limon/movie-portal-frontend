@@ -16,6 +16,7 @@ import {
 import { RootState } from "@/store";
 import { Star } from "lucide-react";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { BsHeart, BsHeartFill, BsChatDots } from "react-icons/bs";
 import { useSelector } from "react-redux";
 
@@ -45,9 +46,10 @@ interface Review {
 
 interface MovieReviewsProps {
   reviews: Review[];
+  refetchReviews?: () => void;
 }
 
-export default function MovieReviews({ reviews }: MovieReviewsProps) {
+export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsProps) {
   const user = useSelector((state: RootState) => state.auth.user);
   const [commentInput, setCommentInput] = useState<Record<number, string>>({});
   const [addComment] = useAddCommentMutation();
@@ -73,7 +75,13 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
 
   const handleLikeToggle = async (reviewId: number) => {
     if (!user) return; // Prevent action for guest
-    await toggleLike(reviewId);
+    try {
+      await toggleLike(reviewId);
+      toast.success("Toggled like!");
+      refetchReviews?.(); 
+    } catch (error) {
+      toast.error("Failed to toggle like.");
+    }
   };
 
   const handleCommentChange = (id: number, value: string) => {
@@ -82,9 +90,16 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
 
   const handleAddComment = async (reviewId: number) => {
     if (!user || !commentInput[reviewId]) return;
-    await addComment({ reviewId, text: commentInput[reviewId] });
-    setCommentInput((prev) => ({ ...prev, [reviewId]: "" }));
+    try {
+      await addComment({ reviewId, text: commentInput[reviewId] });
+      toast.success("Comment added!");
+      setCommentInput((prev) => ({ ...prev, [reviewId]: "" }));
+      refetchReviews?.();
+    } catch (error) {
+      toast.error("Failed to add comment.");
+    }
   };
+  
 
   if (!reviews?.length) {
     return <p className="text-gray-400 mt-6">No reviews available.</p>;
@@ -98,17 +113,31 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
 
   const handleUpdateReview = async () => {
     if (!editingReviewId || !editInputText) return;
-    await updateReview({
-      id: editingReviewId,
-      data: { text: editInputText, rating: editRating },
-    });
-    setEditingReviewId(null);
+    try {
+      await updateReview({
+        id: editingReviewId,
+        data: { text: editInputText, rating: editRating },
+      }).unwrap();
+      toast.success("Review updated!");
+      setEditingReviewId(null);
+      refetchReviews?.();
+    } catch (error) {
+      toast.error("Failed to update review.");
+    }
   };
+  
 
   const handleDeleteReview = async (id: number) => {
     if (!confirm("Are you sure you want to delete this review?")) return;
-    await deleteReview(id);
+    try {
+      await deleteReview(id);
+      toast.success("Review deleted!");
+      refetchReviews?.();
+    } catch (error) {
+      toast.error("Failed to delete review.");
+    }
   };
+  
 
   return (
     <section className="mt-16 space-y-8 px-4 sm:px-0">
@@ -200,13 +229,19 @@ export default function MovieReviews({ reviews }: MovieReviewsProps) {
                 className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
                 onClick={async () => {
                   if (inputText && rating) {
-                    await addReview({
-                      rating,
-                      text: inputText,
-                      tags,
-                      spoiler,
-                    });
-                    setEditMovieType(null); // Close the modal
+                    try {
+                      await addReview({
+                        rating,
+                        text: inputText,
+                        tags,
+                        spoiler,
+                      });
+                      toast.success("Review added!");
+                      setEditMovieType(null);
+                      refetchReviews?.();
+                    } catch (error) {
+                      toast.error("Failed to add review.");
+                    }
                   }
                 }}
               >

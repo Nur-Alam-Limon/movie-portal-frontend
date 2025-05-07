@@ -50,7 +50,7 @@ export default function RootLayout({
               },
               success: {
                 style: {
-                  background: "#2C2A4A", // Purple background
+                  background: "#6964b5", // Purple background
                   color: "#fff",
                   border: "1px solid #2C2A4A", // Darker purple border
                 },

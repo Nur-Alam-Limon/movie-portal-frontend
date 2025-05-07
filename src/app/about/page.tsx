@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12">
+    <main className="container mx-auto py-12">
       <section className="text-center my-16">
         <h1 className="text-4xl font-bold mb-4 text-blue-400">
           About Movie Portal
