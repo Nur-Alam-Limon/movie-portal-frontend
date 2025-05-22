@@ -16,11 +16,11 @@ const Footer: React.FC = () => {
     user?.role === "admin" ? "/admin" : user?.role === "user" ? "/user" : "/login";
 
   return (
-    <footer className="px-4 sm:px-16 md:px-16 bg-[#2C2A4A] text-white py-6">
+    <footer className="px-4 sm:px-16 md:px-16 bg-[#121212] text-white py-6">
       <div className="container mx-auto space-y-6">
         {/* Logo and Social Media Section */}
         <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center border-b border-gray-700 py-6">
-          <div className="text-2xl font-extrabold tracking-widest text-[#71A9F7] mb-4 sm:mb-0">
+          <div className="text-2xl font-extrabold tracking-widest text-[#5799EF] mb-4 sm:mb-0">
           <div className="flex items-center">
           <img
           src="/movie-portal.png"

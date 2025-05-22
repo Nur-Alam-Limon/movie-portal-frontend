@@ -57,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
       : "/login";
 
   return (
-    <nav className="bg-[#2C2A4A] text-white py-6 px-8 lg:px-16 shadow-md sticky top-0 z-50">
+    <nav className="bg-[#121212] text-white py-6 px-8 lg:px-16 shadow-md sticky top-0 z-50">
       <div className="flex justify-between items-center container mx-auto">
         {/* Logo */}
         <Link href="/">
@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               alt="logo"
               className="rounded-sm h-12 w-auto mr-2"
             />
-            <span className="text-2xl font-bold text-[#71A9F7]">
+            <span className="text-2xl font-bold text-white">
               Movie Portal
             </span>
           </div>
@@ -99,7 +99,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                 value={searchQuery}
                 onChange={handleSearchChange}
                 placeholder="Search movies..."
-                className="bg-[#2C2A4A] text-white py-2 px-8 rounded-full pl-12 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500 border"
+                className="bg-white text-black/90 py-2 px-8 rounded-full pl-12 w-96 focus:outline-none focus:ring-2 focus:ring-blue-500 border"
               />
               <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
             </div>
@@ -108,7 +108,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
 
         {/* Mobile Menu - Displayed when isMobileMenuOpen is true */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden absolute top-0 left-0 right-0 bg-[#2C2A4A] py-16 px-8 z-40">
+          <div className="lg:hidden absolute top-0 left-0 right-0 bg-[#2A2A2A] py-16 px-8 z-40">
             <div
               className="absolute right-10 top-10 text-2xl"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -118,14 +118,14 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             <div className="space-y-8">
               <Link
                 href="/browse-movies"
-                className="block hover:text-[#71A9F7] transition"
+                className="block hover:text-[#5799EF] transition"
               >
                 All Movies
               </Link>
 
               <Link
                 href="/about"
-                className="block hover:text-[#71A9F7] transition"
+                className="block hover:text-[#5799EF] transition"
               >
                 About Us
               </Link>
@@ -134,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                 <>
                   <Link
                     href={dashboardHref}
-                    className="block hover:text-[#71A9F7] transition flex items-center"
+                    className="block hover:text-[#5799EF] transition flex items-center"
                   >
                     Dashboard
                   </Link>
@@ -149,13 +149,13 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
                 <>
                   <Link
                     href="/login"
-                    className="block hover:text-[#71A9F7] transition"
+                    className="block hover:text-[#5799EF] transition"
                   >
                     Login
                   </Link>
                   <Link
                     href="/register"
-                    className="block hover:text-[#71A9F7] transition"
+                    className="block hover:text-[#5799EF] transition"
                   >
                     Register
                   </Link>
@@ -165,7 +165,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
               {/* Wishlist Text */}
               {/* <Link
               href="/wishlist"
-              className="block hover:text-[#71A9F7] transition"
+              className="block hover:text-[#5799EF] transition"
             >
               Wishlist
             </Link> */}
@@ -177,12 +177,12 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
         <div className="space-x-6 flex items-center hidden lg:flex">
           <Link
             href="/browse-movies"
-            className="hover:text-[#71A9F7] transition"
+            className="hover:text-[#5799EF] transition"
           >
             All Movies
           </Link>
 
-          <Link href="/about" className="block hover:text-[#71A9F7] transition">
+          <Link href="/about" className="block hover:text-[#5799EF] transition">
             About Us
           </Link>
 
@@ -190,7 +190,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             <>
               <Link
                 href={dashboardHref}
-                className="hover:text-[#71A9F7] transition flex items-center"
+                className="hover:text-[#5799EF] transition flex items-center"
               >
                 Dashboard
               </Link>
@@ -203,12 +203,12 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, setDarkMode }) => {
             </>
           ) : (
             <>
-              <Link href="/login" className="hover:text-[#71A9F7] transition">
+              <Link href="/login" className="hover:text-[#5799EF] transition">
                 Login
               </Link>
               <Link
                 href="/register"
-                className="hover:text-[#71A9F7] transition"
+                className="hover:text-[#5799EF] transition"
               >
                 Register
               </Link>

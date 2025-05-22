@@ -80,7 +80,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-12 bg-[#2C2A4A] text-base text-white rounded-md hover:bg-[#1d1d1d] transition"
+            className="w-full h-12 bg-[#2A2A2A] text-base text-white rounded-md hover:bg-[#1d1d1d] transition"
           >
             {isLoading ? "Logging in..." : "Login"}
           </Button>

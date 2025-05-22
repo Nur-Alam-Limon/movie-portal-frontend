@@ -12,7 +12,7 @@ const Error = () => {
          <h1 className="text-4xl font-bold">Oops! Something went wrong.</h1>
          <p className="mt-2">We couldn’t find the page you’re looking for.</p>
          <div className='space-x-6'>
-         <Link href="/" className="mt-4 inline-block text-white bg-[#2C2A4A] hover:bg-[#2C2A4A] px-6 py-2 rounded-lg transition">
+         <Link href="/" className="mt-4 inline-block text-white bg-[#2A2A2A] hover:bg-[#2A2A2A] px-6 py-2 rounded-lg transition">
            Go Back Home
          </Link>
          <Button onClick={() => window.location.reload()}>Reload</Button>

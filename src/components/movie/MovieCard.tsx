@@ -84,7 +84,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <>
-      <div className="dark:bg-[#2C2A4A] bg-slate-100 text-black dark:text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[550px] flex flex-col">
+      <div className="dark:bg-[#2A2A2A] bg-slate-100 text-black dark:text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[550px] flex flex-col">
         <Link href={`/movie-details/${movie.id}`}>
           <div
             className="h-64 w-full bg-cover bg-center shrink-0"

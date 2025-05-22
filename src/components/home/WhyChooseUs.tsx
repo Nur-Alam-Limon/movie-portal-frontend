@@ -32,7 +32,7 @@ export const WhyChooseUs: React.FC = () => {
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-slate-100 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 dark:bg-[#2C2A4A]"
+              className="bg-slate-100 p-6 sm:p-8 rounded-xl shadow-md hover:shadow-xl transition duration-300 dark:bg-[#2A2A2A]"
             >
               <div className="text-4xl mb-4">{feature.icon}</div>
               <h3 className="text-xl sm:text-2xl font-heading font-semibold mb-3 text-gray-800 dark:text-white">

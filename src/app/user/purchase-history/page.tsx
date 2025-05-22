@@ -32,7 +32,7 @@ function PurchaseHistoryPage() {
           {data?.map((txn: any) => (
             <div
               key={txn.id}
-              className="border rounded-xl p-6 shadow-lg bg-[#2C2A4A] hover:shadow-xl transition duration-200"
+              className="border rounded-xl p-6 shadow-lg bg-[#2A2A2A] hover:shadow-xl transition duration-200"
             >
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-2xl font-bold text-blue-400">

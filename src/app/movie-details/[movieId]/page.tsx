@@ -212,7 +212,7 @@ const MovieDetailsPage: React.FC<MovieDetailsProps> = ({ params }) => {
                   Rent Now for ${movie.priceRent.toFixed(2)}
                 </Button>
                 <Button
-                  className="w-full bg-[#2C2A4A] hover:bg-[#2C2A4A] text-white text-lg px-6 py-6 rounded-md cursor-pointer"
+                  className="w-full bg-[#2A2A2A] hover:bg-[#2A2A2A] text-white text-lg px-6 py-6 rounded-md cursor-pointer"
                   onClick={handleBuyNow}
                 >
                   Buy Now for ${movie.priceBuy.toFixed(2)}

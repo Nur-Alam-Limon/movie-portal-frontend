@@ -27,7 +27,7 @@ function TransactionHistoryPage() {
           {data?.map((txn: any) => (
             <div
               key={txn.id}
-              className="border rounded-xl p-4 sm:p-6 shadow-lg bg-[#2C2A4A] hover:shadow-xl transition duration-200"
+              className="border rounded-xl p-4 sm:p-6 shadow-lg bg-[#2A2A2A] hover:shadow-xl transition duration-200"
             >
               {/* Header */}
               <div className="flex justify-between items-center mb-4 flex-wrap gap-y-2">

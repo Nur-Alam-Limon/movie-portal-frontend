@@ -107,7 +107,7 @@ function MoviesPage() {
               Add New Movie
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-white text-black dark:bg-[#2C2A4A] dark:text-white">
+          <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white">
             <DialogHeader>
               <DialogTitle>Add Movie</DialogTitle>
               <DialogDescription>Enter movie details below.</DialogDescription>
@@ -168,7 +168,7 @@ function MoviesPage() {
           {movies?.map((movie: any) => (
             <div
               key={movie.id}
-              className="bg-[#2C2A4A] p-2 rounded-lg shadow-md space-y-3"
+              className="bg-[#2A2A2A] p-2 rounded-lg shadow-md space-y-3"
             >
               <MovieCard movie={movie} />
 
@@ -178,7 +178,7 @@ function MoviesPage() {
                     open={editMovie?.id === movie.id}
                     onOpenChange={() => setEditMovie(null)}
                   >
-                    <DialogContent className="bg-white text-black dark:bg-[#2C2A4A] dark:text-white">
+                    <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white">
                       <DialogHeader>
                         <DialogTitle>Edit Movie</DialogTitle>
                         <DialogDescription>
