@@ -11,7 +11,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import Loading from "../loading";
 
 function AdminDashboardPage() {
   const { data, isLoading, isError } = useGetDashboardQuery();
@@ -138,7 +137,7 @@ function AdminDashboardPage() {
                     <XAxis dataKey="title" tick={{ fontSize: 12 }} />
                     <YAxis />
                     <Tooltip />
-                    <Bar dataKey="averageRating" fill="#8884d8" />
+                    <Bar dataKey="averageRating" fill="#3B82F6" />
                   </BarChart>
                 </ResponsiveContainer>
               </CardContent>
@@ -201,7 +200,16 @@ function StatCard({
       </CardHeader>
       <CardContent>
         <p className="text-2xl font-bold">
-          {isLoading ? <Loading/> : value ?? 0}
+          {isLoading ? (
+            <div>
+              <div className="flex items-center space-x-2 animate-pulse">
+                <div className="w-4 h-4 bg-[#2A2A2A] rounded-full"></div>
+                <div className="w-4 h-4 bg-[#2A2A2A] rounded-full"></div>
+              </div>
+            </div>
+          ) : (
+            value ?? 0
+          )}
         </p>
       </CardContent>
     </Card>

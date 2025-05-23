@@ -49,7 +49,10 @@ interface MovieReviewsProps {
   refetchReviews?: () => void;
 }
 
-export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsProps) {
+export default function MovieReviews({
+  reviews,
+  refetchReviews,
+}: MovieReviewsProps) {
   const user = useSelector((state: RootState) => state.auth.user);
   const [commentInput, setCommentInput] = useState<Record<number, string>>({});
   const [addComment] = useAddCommentMutation();
@@ -78,7 +81,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
     try {
       await toggleLike(reviewId);
       toast.success("Toggled like!");
-      refetchReviews?.(); 
+      refetchReviews?.();
     } catch (error) {
       toast.error("Failed to toggle like.");
     }
@@ -99,10 +102,129 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
       toast.error("Failed to add comment.");
     }
   };
-  
 
   if (!reviews?.length) {
-    return <p className="text-gray-400 mt-6">No reviews available.</p>;
+    return (
+      <section className="mt-16 space-y-8 px-4 sm:px-0">
+        <div className="flex item-center justify-between border-b border-gray-600 pb-6 tracking-wide">
+          <h2 className="text-2xl font-bold dark:text-white text-black">
+            🎥 Audience Reviews
+          </h2>
+
+          <Dialog>
+            <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
+              <button className="flex text-md items-center gap-2 px-10 text-lg text-blue-400 rounded hover:text-blue-600 transition cursor-pointer">
+                <Star className="w-5 h-5" /> Add a Review
+              </button>
+            </DialogTrigger>
+            {editMovieType === "review" && (
+              <DialogContent className="max-w-2xl p-8 dar:bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl dark:text-white y-scrollable">
+                <DialogHeader>
+                  <DialogTitle className="text-xl font-semibold">
+                    Add Review
+                  </DialogTitle>
+                  <DialogDescription className="dark:text-gray-300 text-gray-700 mt-2">
+                    Share your thoughts and give this movie a rating.
+                  </DialogDescription>
+                </DialogHeader>
+
+                {/* Star Rating */}
+                <div className="flex gap-2 items-center mt-4">
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((star) => (
+                    <Star
+                      key={star}
+                      className={`w-6 h-6 cursor-pointer transition ${
+                        star <= rating
+                          ? "text-yellow-400 fill-yellow-400"
+                          : "text-gray-500"
+                      }`}
+                      onClick={() => setRating(star)}
+                    />
+                  ))}
+                </div>
+
+                {/* Review Input */}
+                <textarea
+                  placeholder="Write your review..."
+                  className="w-full mt-4 p-3 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
+                  rows={4}
+                  value={inputText}
+                  onChange={(e) => setInputText(e.target.value)}
+                />
+
+                {/* Tags Input */}
+                <div className="mt-3 flex flex-wrap gap-2 items-center">
+                  {tags.map((tag, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-gray-600 px-2 py-1 rounded text-sm flex items-center gap-1"
+                    >
+                      #{tag}
+                      <button
+                        className="ml-1 text-red-400"
+                        onClick={() =>
+                          setTags(tags.filter((_, i) => i !== idx))
+                        }
+                      >
+                        ×
+                      </button>
+                    </span>
+                  ))}
+                  <input
+                    type="text"
+                    placeholder="Add tag"
+                    className="p-2 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
+                    value={tagInput}
+                    onChange={(e) => setTagInput(e.target.value)}
+                  />
+                </div>
+
+                {/* Spoiler Checkbox */}
+                <div className="mt-4">
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      checked={spoiler}
+                      onChange={(e) => setSpoiler(e.target.checked)}
+                    />
+                    <span className="text-md dark:text-gray-300 text-gray-700">
+                      Contains spoilers
+                    </span>
+                  </label>
+                </div>
+
+                {/* Submit Review Button */}
+                <button
+                  className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
+                  onClick={async () => {
+                    if (inputText && rating) {
+                      try {
+                        await addReview({
+                          rating,
+                          text: inputText,
+                          tags,
+                          spoiler,
+                        });
+                        toast.success("Review added!");
+                        setEditMovieType(null);
+                        refetchReviews?.();
+                      } catch (error) {
+                        toast.error("Failed to add review.");
+                      }
+                    }
+                  }}
+                >
+                  Submit Review
+                </button>
+              </DialogContent>
+            )}
+          </Dialog>
+        </div>
+        <div className="text-center mt-16 text-black dark:text-white">
+          No Reviews found.
+        </div>
+      </section>
+    );
   }
 
   const startEditReview = (review: Review) => {
@@ -125,7 +247,6 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
       toast.error("Failed to update review.");
     }
   };
-  
 
   const handleDeleteReview = async (id: number) => {
     if (!confirm("Are you sure you want to delete this review?")) return;
@@ -137,26 +258,27 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
       toast.error("Failed to delete review.");
     }
   };
-  
 
   return (
     <section className="mt-16 space-y-8 px-4 sm:px-0">
-      <div className="flex item-center justify-between border-b border-gray-600 pb-2 tracking-wide">
-        <h2 className="text-3xl font-bold text-white">🎥 Audience Reviews</h2>
+      <div className="flex item-center justify-between border-b border-gray-600 pb-6 tracking-wide">
+        <h2 className="text-2xl font-bold dark:text-white text-black">
+          🎥 Audience Reviews
+        </h2>
 
         <Dialog>
           <DialogTrigger asChild onClick={() => setEditMovieType("review")}>
-            <button className="flex items-center gap-2 px-2 py-2 text-lg text-blue-400 rounded hover:text-blue-600 transition cursor-pointer">
-              <Star className="w-7 h-7" /> Add a Review
+            <button className="flex text-md items-center gap-2 px-10 text-lg text-blue-400 rounded hover:text-blue-600 transition cursor-pointer">
+              <Star className="w-5 h-5" /> Add a Review
             </button>
           </DialogTrigger>
           {editMovieType === "review" && (
-            <DialogContent className="max-w-2xl p-8 bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+            <DialogContent className="max-w-2xl p-8 dar:bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl dark:text-white y-scrollable">
               <DialogHeader>
                 <DialogTitle className="text-xl font-semibold">
                   Add Review
                 </DialogTitle>
-                <DialogDescription className="text-gray-300 mt-2">
+                <DialogDescription className="dark:text-gray-300 text-gray-700 mt-2">
                   Share your thoughts and give this movie a rating.
                 </DialogDescription>
               </DialogHeader>
@@ -179,7 +301,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
               {/* Review Input */}
               <textarea
                 placeholder="Write your review..."
-                className="w-full mt-4 p-3 rounded bg-[#1F1F1F] border border-gray-600 text-white"
+                className="w-full mt-4 p-3 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
                 rows={4}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
@@ -204,7 +326,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                 <input
                   type="text"
                   placeholder="Add tag"
-                  className="p-2 rounded bg-[#1F1F1F] border border-gray-600 text-white"
+                  className="p-2 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                 />
@@ -218,7 +340,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                     checked={spoiler}
                     onChange={(e) => setSpoiler(e.target.checked)}
                   />
-                  <span className="text-md text-gray-300">
+                  <span className="text-md dark:text-gray-300 text-gray-700">
                     Contains spoilers
                   </span>
                 </label>
@@ -255,7 +377,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
       {reviews.map((review) => (
         <div
           key={review.id}
-          className="p-6 bg-gradient-to-b from-[#1f1f2f] to-[#12121c] rounded-2xl border border-gray-700 shadow-xl hover:shadow-indigo-700/30 transition-shadow duration-300"
+          className="p-6 dark:text-white bg-gradient-to-b from-[#f0f0ff] to-[#e0e0f5] dark:from-[#1f1f2f] dark:to-[#12121c] rounded-2xl border border-gray-700 shadow-xl hover:shadow-indigo-700/30 transition-shadow duration-300"
         >
           {/* Header Section */}
           <div className="flex justify-between items-center mb-4">
@@ -273,7 +395,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
               {review.tags?.map((tag) => (
                 <span
                   key={tag}
-                  className="text-xs text-gray-300 bg-gray-700/30 px-2 py-0.5 rounded-full uppercase"
+                  className="text-xs dark:text-gray-300 text-gray-700 bg-gray-700/30 px-2 py-0.5 rounded-full uppercase"
                 >
                   #{tag}
                 </span>
@@ -291,13 +413,13 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
               {isLiked(review) ? (
                 <BsHeartFill className="text-red-500" />
               ) : (
-                <BsHeart className="text-white hover:text-red-400 transition-colors" />
+                <BsHeart className="text-black dark:text-white hover:text-red-400 transition-colors" />
               )}
             </div>
           </div>
 
           {/* Review Text */}
-          <p className="text-gray-300 leading-relaxed text-sm sm:text-base mb-4">
+          <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-sm sm:text-base mb-4">
             {review.text}
           </p>
 
@@ -305,7 +427,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
           {user && (
             <div className="flex items-center gap-2 mt-2">
               <input
-                className="flex-1 bg-[#0f0f1f] border border-gray-700 rounded-lg px-4 py-2 text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="flex-1 dark:bg-[#0f0f1f] border border-gray-700 rounded-lg px-4 py-2 dark:text-white text-sm placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
                 placeholder="Add your thoughts..."
                 value={commentInput[review.id] || ""}
                 onChange={(e) => handleCommentChange(review.id, e.target.value)}
@@ -343,7 +465,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                     return (
                       <div
                         key={comment.id}
-                        className="bg-[#12121c] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-300"
+                        className="dark:bg-[#12121c] border border-gray-700 rounded-lg px-4 py-3 text-sm text-gray-700 dark:text-gray-300"
                       >
                         <div className="flex items-center justify-between mb-1">
                           <span className="font-semibold text-indigo-400 py-2">
@@ -353,7 +475,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                             {formattedDate}
                           </span>
                         </div>
-                        <p className="leading-snug text-gray-300">
+                        <p className="leading-snug text-gray-700 dark:text-gray-300">
                           {comment.text}
                         </p>
                       </div>
@@ -386,7 +508,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
         open={!!editingReviewId}
         onOpenChange={() => setEditingReviewId(null)}
       >
-        <DialogContent className="max-w-xl p-6 bg-[#2A2A2A]/90 text-white">
+        <DialogContent className="max-w-xl p-6 bg-[#2A2A2A]/90 text-white y-scrollable">
           <DialogHeader>
             <DialogTitle>Edit Your Review</DialogTitle>
           </DialogHeader>

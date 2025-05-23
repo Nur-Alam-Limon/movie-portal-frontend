@@ -3,6 +3,15 @@
 import Loading from "../loading";
 import MovieCard from "@/components/movie/MovieCard";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useGetAllMoviesQuery } from "@/features/movies/moviesApi";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -98,108 +107,123 @@ const AllMoviesPage = () => {
   return (
     <div className="flex flex-col lg:flex-row min-h-screen">
       {/* Filters Section */}
-      <aside className="w-full lg:w-[20%] p-4 lg:p-8 border-r-2 border-gray-300">
-        <h2 className="text-xl font-semibold mb-6">Filters</h2>
+      <aside className="w-full lg:w-[20%] p-4 lg:p-8 border-r-2 border-gray-300 space-y-6">
+        <h2 className="text-xl font-semibold">Filters</h2>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Search</label>
-          <input
+        <div className="space-y-2">
+          <Label>Search</Label>
+          <Input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
             placeholder="Title, cast, genre..."
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Genre</label>
-          <select
-            value={selectedGenre}
-            onChange={(e) => setSelectedGenre(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+        <div className="space-y-2">
+          <Label>Genre</Label>
+          <Select
+            onValueChange={(val) => setSelectedGenre(val === "all" ? "" : val)}
+            defaultValue={selectedGenre || "all"}
           >
-            <option value="">All Genres</option>
-            {allGenres.map((genre) => (
-              <option key={genre} value={genre}>
-                {genre}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Genres" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Genres</SelectItem>
+              {allGenres.map((genre) => (
+                <SelectItem key={genre} value={genre}>
+                  {genre}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Release Year</label>
-          <select
-            value={selectedYear}
-            onChange={(e) => setSelectedYear(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+        <div className="space-y-2">
+          <Label>Release Year</Label>
+          <Select
+            onValueChange={(val) => setSelectedYear(val === "all" ? "" : val)}
+            defaultValue={selectedYear || "all"}
           >
-            <option value="">All Years</option>
-            {allYears.map((year) => (
-              <option key={year} value={year}>
-                {year}
-              </option>
-            ))}
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Years" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Years</SelectItem>
+              {allYears.map((year) => (
+                <SelectItem key={year} value={String(year)}>
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Director</label>
-          <select
-            value={selectedDirector}
-            onChange={(e) => setSelectedDirector(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+        <div className="space-y-2">
+          <Label>Director</Label>
+          <Select
+            onValueChange={(val) =>
+              setSelectedDirector(val === "all" ? "" : val)
+            }
+            defaultValue={selectedDirector || "all"}
           >
-            <option value="">All Directors</option>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="All Directors" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Directors</SelectItem>
               {allDirectors.map((director) => (
-              <option key={director} value={director}>
-                {director}
-              </option>
-            ))}
-          </select>
+                <SelectItem key={director} value={director}>
+                  {director}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Min Rating</label>
-          <input
+        <div className="space-y-2">
+          <Label>Min Rating</Label>
+          <Input
             type="number"
             min={0}
             max={10}
             step="0.1"
             value={minRating}
             onChange={(e) => setMinRating(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
             placeholder="e.g., 5"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-1">Max Rating</label>
-          <input
+        <div className="space-y-2">
+          <Label>Max Rating</Label>
+          <Input
             type="number"
             min={0}
             max={10}
             step="0.1"
             value={maxRating}
             onChange={(e) => setMaxRating(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
             placeholder="e.g., 9"
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block font-medium mb-2">Sort By</label>
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="w-full p-2 border border-gray-300 rounded-lg"
+        <div className="space-y-2">
+          <Label>Sort By</Label>
+          <Select
+            onValueChange={(val) => setSortBy(val === "all" ? "" : val)}
+            defaultValue={sortBy || "all"}
           >
-            <option value="">Default</option>
-            <option value="highestRated">Highest Rated</option>
-            <option value="mostReviewed">Most Reviewed</option>
-            <option value="latest">Latest Releases</option>
-          </select>
+            <SelectTrigger className="w-full">
+              <SelectValue placeholder="Sort" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Default</SelectItem>
+              <SelectItem value="highestRated">Highest Rated</SelectItem>
+              <SelectItem value="mostReviewed">Most Reviewed</SelectItem>
+              <SelectItem value="latest">Latest Releases</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </aside>
 
@@ -207,7 +231,6 @@ const AllMoviesPage = () => {
       <main className="w-full lg:w-[80%] p-4 lg:p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">All Movies</h1>
-          
         </div>
 
         {filteredMovies.length === 0 ? (

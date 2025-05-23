@@ -102,12 +102,12 @@ function MoviesPage() {
         <h1 className="text-2xl font-bold">Movies</h1>
         <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
           <DialogTrigger asChild>
-            <Button onClick={() => setIsModalOpen(true)}>
+            <Button onClick={() => setIsModalOpen(true)} className="bg-blue-500 text-white hover:bg-blue-600">
               <Plus className="w-4 h-4 mr-2" />
               Add New Movie
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white">
+          <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white y-scrollable">
             <DialogHeader>
               <DialogTitle>Add Movie</DialogTitle>
               <DialogDescription>Enter movie details below.</DialogDescription>
@@ -178,7 +178,7 @@ function MoviesPage() {
                     open={editMovie?.id === movie.id}
                     onOpenChange={() => setEditMovie(null)}
                   >
-                    <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white">
+                    <DialogContent className="bg-white text-black dark:bg-[#2A2A2A] dark:text-white y-scrollable">
                       <DialogHeader>
                         <DialogTitle>Edit Movie</DialogTitle>
                         <DialogDescription>

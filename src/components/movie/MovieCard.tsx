@@ -147,7 +147,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                 </button>
               </DialogTrigger>
               {editMovieType === "review" && (
-                <DialogContent className="max-w-2xl p-8 bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+                <DialogContent className="max-w-2xl p-8 bg-slate-300 dark:bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl y-scrollable dark:text-white">
                   <DialogHeader>
                     <DialogTitle className="text-2xl font-semibold text-center text-blue-400 my-4 pb-3 border-b border-gray-600">
                       {movie.title}
@@ -156,7 +156,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                     <DialogTitle className="text-xl font-semibold">
                       Add Review
                     </DialogTitle>
-                    <DialogDescription className="text-gray-300 mt-2">
+                    <DialogDescription className="dark:text-gray-300 mt-2 text-gray-700">
                       Share your thoughts and give this movie a rating.
                     </DialogDescription>
                   </DialogHeader>
@@ -179,7 +179,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                   {/* Review Input */}
                   <textarea
                     placeholder="Write your review..."
-                    className="w-full mt-4 p-3 rounded bg-[#1F1F1F] border border-gray-600 text-white"
+                    className="w-full mt-4 p-3 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
                     rows={4}
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
@@ -206,7 +206,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                     <input
                       type="text"
                       placeholder="Add tag"
-                      className="p-2 rounded bg-[#1F1F1F] border border-gray-600 text-white"
+                      className="p-2 rounded dark:bg-[#1F1F1F] border border-gray-600 dark:text-white"
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
                     />
@@ -220,7 +220,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                         checked={spoiler}
                         onChange={(e) => setSpoiler(e.target.checked)}
                       />
-                      <span className="text-md text-gray-300">
+                      <span className="text-md dark:text-gray-300 text-gray-700">
                         Contains spoilers
                       </span>
                     </label>

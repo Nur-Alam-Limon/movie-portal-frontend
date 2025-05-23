@@ -42,7 +42,7 @@ const EditMovieForm = ({ initialData, onSubmit }: MovieFormProps) => {
   };
 
   return (
-    <div className="space-y-4 max-h-[600px] overflow-y-auto">
+    <div className="space-y-4 max-h-[600px] overflow-y-auto pr-4">
       <div className="flex flex-col">
         <label className="text-sm mb-4">Title</label>
         <Input

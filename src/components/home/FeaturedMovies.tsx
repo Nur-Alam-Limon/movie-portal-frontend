@@ -13,6 +13,8 @@ type FeaturedMoviesProps = {
 const FeaturedMovies: React.FC<FeaturedMoviesProps> = ({ headingText, variant }) => {
   const { data: movieData, isLoading, isError } = useGetAllMoviesQuery(null);
 
+  console.log("Movie Data", movieData);
+
   
   if (isLoading) return <Loading />;
   if (isError) return <Error />;

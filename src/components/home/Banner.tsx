@@ -28,7 +28,7 @@ export default function HeroCarousel() {
   };
 
   return (
-    <section className="container mx-auto my-16 h-[75vh] overflow-hidden rounded-3xl border border-gray-700 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
+    <section className="container mx-auto my-16 h-[70vh] overflow-hidden rounded-3xl border border-gray-700 shadow-[0_10px_25px_rgba(0,0,0,0.5)]">
       <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] h-full">
         {/* Left: Banner Section */}
         <div className="relative h-full w-full">
@@ -86,7 +86,7 @@ export default function HeroCarousel() {
         </div>
 
         {/* Right: Upcoming Cards */}
-        <div className="bg-white dark:bg-[#1f1f1f] overflow-y-auto y-scrollable p-6 space-y-4">
+        <div className="hidden lg:block bg-white dark:bg-[#1f1f1f] overflow-y-auto y-scrollable p-6 space-y-4">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
             Coming Up Next
           </h2>
