@@ -84,7 +84,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <>
-      <div className="dark:bg-[#2A2A2A] bg-slate-100 text-black dark:text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[550px] flex flex-col">
+      <div className="dark:bg-[#2A2A2A] bg-slate-200 text-black dark:text-white rounded-xl overflow-hidden shadow-lg transition-transform hover:-translate-y-1 hover:shadow-2xl duration-300 h-[620px] flex flex-col">
         <Link href={`/movie-details/${movie.id}`}>
           <div
             className="h-64 w-full bg-cover bg-center shrink-0"
@@ -120,7 +120,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
             {/* Add to Watchlist Button */}
             <button
               onClick={handleAddToWatchlist}
-              className="flex items-center gap-2 px-2 text-sm dark:text-white rounded hover:text-blue-400 transition cursor-pointer"
+              className="flex items-center gap-2 px-2 text-sm dark:text-white rounded hover:!text-blue-400 transition cursor-pointer"
             >
               <Heart
                 className={`w-5 h-5 ${isInWatchlist ? "text-red-400" : ""}`}
@@ -147,7 +147,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                 </button>
               </DialogTrigger>
               {editMovieType === "review" && (
-                <DialogContent className="max-w-2xl p-8 bg-[#1f1d36]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+                <DialogContent className="max-w-2xl p-8 bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
                   <DialogHeader>
                     <DialogTitle className="text-2xl font-semibold text-center text-blue-400 my-4 pb-3 border-b border-gray-600">
                       {movie.title}
@@ -179,7 +179,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                   {/* Review Input */}
                   <textarea
                     placeholder="Write your review..."
-                    className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                    className="w-full mt-4 p-3 rounded bg-[#1F1F1F] border border-gray-600 text-white"
                     rows={4}
                     value={inputText}
                     onChange={(e) => setInputText(e.target.value)}
@@ -206,7 +206,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
                     <input
                       type="text"
                       placeholder="Add tag"
-                      className="p-2 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                      className="p-2 rounded bg-[#1F1F1F] border border-gray-600 text-white"
                       value={tagInput}
                       onChange={(e) => setTagInput(e.target.value)}
                     />
@@ -228,7 +228,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
                   {/* Submit Review Button */}
                   <button
-                    className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+                    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
                     onClick={async () => {
                       if (inputText && rating) {
                         try {

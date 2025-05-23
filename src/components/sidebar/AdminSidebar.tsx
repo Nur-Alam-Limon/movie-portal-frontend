@@ -21,7 +21,7 @@ export const AdminSidebar = ({
   };
 
   return (
-    <aside className="lg:w-72 w-full bg-[#2A2A2A] text-white flex flex-col flex-wrap items-start justify-start h-48 lg:h-auto lg:min-h-screen border-r border-gray-700 shadow-lg">
+    <aside className="lg:w-72 w-full bg-[#121212] text-white flex flex-col flex-wrap items-start justify-start h-48 lg:h-auto lg:min-h-screen border-r border-gray-700 shadow-lg">
       <div className="text-2xl font-bold p-6 text-center border-b border-gray-700 w-full text-blue-400">
         Admin Panel
       </div>

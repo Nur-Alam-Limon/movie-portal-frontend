@@ -152,7 +152,7 @@ const AllMoviesPage = () => {
             className="w-full p-2 border border-gray-300 rounded-lg"
           >
             <option value="">All Directors</option>
-            {allDirectors.map((director) => (
+              {allDirectors.map((director) => (
               <option key={director} value={director}>
                 {director}
               </option>
@@ -207,7 +207,7 @@ const AllMoviesPage = () => {
       <main className="w-full lg:w-[80%] p-4 lg:p-8">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold">All Movies</h1>
-          <Button onClick={handleAddMovie}>Sell a Movie</Button>
+          
         </div>
 
         {filteredMovies.length === 0 ? (

@@ -151,7 +151,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
             </button>
           </DialogTrigger>
           {editMovieType === "review" && (
-            <DialogContent className="max-w-2xl p-8 bg-[#1f1d36]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
+            <DialogContent className="max-w-2xl p-8 bg-[#2A2A2A]/90 backdrop-blur-md border border-gray-600 rounded-xl shadow-2xl text-white">
               <DialogHeader>
                 <DialogTitle className="text-xl font-semibold">
                   Add Review
@@ -179,7 +179,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
               {/* Review Input */}
               <textarea
                 placeholder="Write your review..."
-                className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                className="w-full mt-4 p-3 rounded bg-[#1F1F1F] border border-gray-600 text-white"
                 rows={4}
                 value={inputText}
                 onChange={(e) => setInputText(e.target.value)}
@@ -204,7 +204,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                 <input
                   type="text"
                   placeholder="Add tag"
-                  className="p-2 rounded bg-[#2a2a40] border border-gray-600 text-white"
+                  className="p-2 rounded bg-[#1F1F1F] border border-gray-600 text-white"
                   value={tagInput}
                   onChange={(e) => setTagInput(e.target.value)}
                 />
@@ -226,7 +226,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
 
               {/* Submit Review Button */}
               <button
-                className="mt-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg"
+                className="mt-4 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg"
                 onClick={async () => {
                   if (inputText && rating) {
                     try {
@@ -311,7 +311,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
                 onChange={(e) => handleCommentChange(review.id, e.target.value)}
               />
               <button
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm"
                 onClick={() => handleAddComment(review.id)}
               >
                 <BsChatDots />
@@ -386,7 +386,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
         open={!!editingReviewId}
         onOpenChange={() => setEditingReviewId(null)}
       >
-        <DialogContent className="max-w-xl p-6 bg-[#1f1d36]/90 text-white">
+        <DialogContent className="max-w-xl p-6 bg-[#2A2A2A]/90 text-white">
           <DialogHeader>
             <DialogTitle>Edit Your Review</DialogTitle>
           </DialogHeader>
@@ -406,7 +406,7 @@ export default function MovieReviews({ reviews, refetchReviews }: MovieReviewsPr
           <textarea
             value={editInputText}
             onChange={(e) => setEditInputText(e.target.value)}
-            className="w-full mt-4 p-3 rounded bg-[#2a2a40] border border-gray-600 text-white"
+            className="w-full mt-4 p-3 rounded bg-[#1F1F1F] border border-gray-600 text-white"
             rows={4}
           />
           <div className="mt-4 flex justify-end gap-2">

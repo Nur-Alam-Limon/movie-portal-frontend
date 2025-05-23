@@ -116,7 +116,7 @@ export default function AboutPage() {
         </p>
         <a
           href="/register"
-          className="inline-block bg-blue-400 text-white font-medium py-3 px-6 rounded-full shadow hover:bg-indigo-700 transition"
+          className="inline-block bg-blue-400 text-white font-medium py-3 px-6 rounded-full shadow hover:bg-blue-700 transition"
         >
           Get Started
         </a>

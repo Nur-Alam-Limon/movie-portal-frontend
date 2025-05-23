@@ -131,3 +131,30 @@ body {
 .container {
   width: 85vw;
 }
+
+/* For WebKit browsers */
+.y-scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.y-scrollable::-webkit-scrollbar-track {
+  background: #000000; 
+  border-radius: 8px;
+}
+
+.y-scrollable::-webkit-scrollbar-thumb {
+  background-color: #555; 
+  border-radius: 8px;
+  border: 2px solid #000000; 
+}
+
+/* For Firefox */
+.y-scrollable {
+  scrollbar-width: thin;
+  scrollbar-color: #555 #000000;
+}
+select {
+  padding-right: 2.5rem !important;
+}
+
+
