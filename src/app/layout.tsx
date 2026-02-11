@@ -33,6 +33,7 @@ export default function RootLayout({
       <head>
         <link rel="icon" href="/favicon.png" type="image/png" />
         <title>Movie Portal</title>
+        <meta name="google-site-verification" content="o-D_QdIECNvQOFd0sBkvKcmfuwFBXZzxWKO7OS6gW0Y" />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased ${
